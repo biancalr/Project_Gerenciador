@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "978280976985",
+    "firebase_url": "https://gerenciador-75ca8.firebaseio.com",
+    "project_id": "gerenciador-75ca8",
+    "storage_bucket": "gerenciador-75ca8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:978280976985:android:8b64abe246e90e08",
+        "android_client_info": {
+          "package_name": "tads.bianca.gerenciador"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "978280976985-potajbc0nbppe7ckdvbpbhv288m570ba.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "tads.bianca.gerenciador",
+            "certificate_hash": "da78f0156281370b0b516241eded0b0ddee846aa"
+          }
+        },
+        {
+          "client_id": "978280976985-6ppm4tfji0q9i88p1hdg27r4tvjq43ot.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC-7livbCAunW7eYceON_oasrN_T-uZoiY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "978280976985-6ppm4tfji0q9i88p1hdg27r4tvjq43ot.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

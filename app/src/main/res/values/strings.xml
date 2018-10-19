@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">Gerenciador</string>
+    <string name="edit_name">Nome</string>
+    <string name="edit_email">Email</string>
+    <string name="edit_password">Senha</string>
+    <string name="edit_login">Login</string>
+    <string name="text_hello">Welcome</string>
+    <string name="button_sign_up">Sign Up</string>
+    <string name="button_sign_in">Sign In</string>
+    <string name="button_sign_out">Sign Out</string>
+    <string name="button_create_task">Create</string>
+    <string name="action_search">Search</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_select">Select</string>
+    <string-array name="spinner">
+        <item>20 minutos antes</item>
+        <item>30 minutos antes</item>
+        <item>1 hora antes</item>
+        <item>2 horas antes</item>
+        <item>5 horas antes</item>
+        <item>12 horas antes</item>
+        <item>24 horas antes</item>
+    </string-array>
+</resources>
