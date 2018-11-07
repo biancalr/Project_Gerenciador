@@ -13,7 +13,7 @@ public class Atividade {
     private String hour;
 
     public Atividade() {
-//        this.user = null;
+        this.user = null;
         this.name = null;
         this.localization = null;
         this.description = null;

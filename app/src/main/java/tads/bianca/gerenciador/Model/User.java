@@ -3,10 +3,12 @@ package tads.bianca.gerenciador.Model;
 public class User {
     private String name;
     private String email;
+    private Atividade[] atividades;
 
     public User() {
         this.name = null;
         this.email = null;
+        this.atividades = null;
     }
 
     public User(String name, String email) {
