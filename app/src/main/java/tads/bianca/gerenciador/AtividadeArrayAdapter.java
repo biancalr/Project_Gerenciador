@@ -17,7 +17,7 @@ class AtividadeArrayAdapter extends RecyclerView.Adapter<AtividadeArrayAdapter.A
 
     private static final String TAG = "AtividadeArrayAdapter";
 
-    private Atividade[] tasks;
+    private final Atividade[] tasks;
     Context context;
 
     public AtividadeArrayAdapter(Atividade[] tasks, Context context) {
@@ -34,19 +34,7 @@ class AtividadeArrayAdapter extends RecyclerView.Adapter<AtividadeArrayAdapter.A
 
     @Override
     public void onBindViewHolder(AtividadeHolder holder, final int position) {
-        Log.d(TAG, "onBindViewHolder: called");
         holder.bindTask(tasks[position]);
-
-        holder.linearLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.d(TAG, "onClicked: clicked on " + tasks[position]);
-                Toast.makeText(context, "Task selected is: " +
-                        tasks[position].getName(), Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(context, AtividadeDescriptionActivity.class);
-                context.startActivity(intent);
-            }
-        });
     }
 
     @Override
@@ -60,27 +48,28 @@ class AtividadeArrayAdapter extends RecyclerView.Adapter<AtividadeArrayAdapter.A
 
     public class AtividadeHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
-        private TextView taskName;
-        private TextView taskDate;
+        private final TextView taskName;
+        private final TextView taskDate;
 
         private Atividade task;
 
-        LinearLayout linearLayout;
         Context context;
 
         public AtividadeHolder(View itemView) {
             super(itemView);
             this.taskName = (TextView) itemView.findViewById(R.id.task_name);
             this.taskDate = (TextView) itemView.findViewById(R.id.task_date);
-            this.linearLayout = (LinearLayout) itemView.findViewById(R.id.parent_layout);
             itemView.setOnClickListener(this);
             context = itemView.getContext();
         }
 
         @Override
         public void onClick(View v) {
+            Log.d(TAG, "onClick: called");
             Toast.makeText(v.getContext(), "Task selected: " +
                     task.getName(), Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(context, AtividadeDescriptionActivity.class);
+            context.startActivity(intent);
         }
 
         public void bindTask(Atividade task) {
