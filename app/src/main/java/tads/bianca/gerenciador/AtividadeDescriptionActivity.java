@@ -17,6 +17,15 @@ public class AtividadeDescriptionActivity extends AppCompatActivity {
     private static final String TAG = "AtividadeDescriptionActivity";
     private Atividade atividade;
 
+    public AtividadeDescriptionActivity(Atividade atividade){
+        this.atividade = atividade;
+    }
+
+    public AtividadeDescriptionActivity(){
+        this.atividade = null;
+    }
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
