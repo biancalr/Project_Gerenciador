@@ -36,6 +36,7 @@ class AtividadeArrayAdapter extends RecyclerView.Adapter<AtividadeArrayAdapter.A
     public void onBindViewHolder(AtividadeHolder holder, final int position) {
         Log.d(TAG, "onBindViewHolder: called");
         holder.bindTask(tasks[position]);
+
         holder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -62,9 +63,10 @@ class AtividadeArrayAdapter extends RecyclerView.Adapter<AtividadeArrayAdapter.A
         private TextView taskName;
         private TextView taskDate;
 
-        private Atividade task = new Atividade();
+        private Atividade task;
 
         LinearLayout linearLayout;
+        Context context;
 
         public AtividadeHolder(View itemView) {
             super(itemView);
@@ -72,6 +74,7 @@ class AtividadeArrayAdapter extends RecyclerView.Adapter<AtividadeArrayAdapter.A
             this.taskDate = (TextView) itemView.findViewById(R.id.task_date);
             this.linearLayout = (LinearLayout) itemView.findViewById(R.id.parent_layout);
             itemView.setOnClickListener(this);
+            context = itemView.getContext();
         }
 
         @Override
@@ -81,6 +84,7 @@ class AtividadeArrayAdapter extends RecyclerView.Adapter<AtividadeArrayAdapter.A
         }
 
         public void bindTask(Atividade task) {
+            Log.d(TAG, "bindTask: called");
             this.task = task;
             taskName.setText(task.getName());
             taskDate.setText(task.getDate());
