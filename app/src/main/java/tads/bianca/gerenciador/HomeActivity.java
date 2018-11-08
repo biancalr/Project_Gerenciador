@@ -24,7 +24,7 @@ public class HomeActivity extends AppCompatActivity {
     private FirebaseAuthListener authListener;
     private final static Atividade[] tasks = {
             new Atividade("Task 1", "Place", "Short Task", "13/12/2018", "13:20"),
-            /*new Atividade("Task 2", "Other Place", "Short Task 2", "19/04/2018", "19:15")*/};
+            new Atividade("Task 2", "Other Place", "Short Task 2", "19/04/2018", "19:15")};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
