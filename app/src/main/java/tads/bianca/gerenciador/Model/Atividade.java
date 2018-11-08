@@ -29,6 +29,10 @@ public class Atividade {
         this.hour = hora;
     }
 
+    public User getUser() {
+        return user;
+    }
+
     public String getName() {
         return name;
     }
@@ -47,6 +51,10 @@ public class Atividade {
 
     public String getLocalization() {
         return localization;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public void setName(String name) {

@@ -24,6 +24,10 @@ public class User {
         return email;
     }
 
+    public Atividade[] getAtividades() {
+        return atividades;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
@@ -31,5 +35,30 @@ public class User {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    public boolean hasAtividade(){
+        return atividades.length > 0;
+    }
+
+    public void addAtividade(Atividade atividade){
+        if (this.atividades == null){
+            this.atividades = new Atividade[1];
+        }
+        atividade.setUser(this);
+        this.atividades[this.atividades.length] = atividade;
+    }
+
+    public boolean removeAtividade(Atividade atividade){
+        for (int i = 0; i < this.atividades.length; i++) {
+            if (atividades[i].equals(atividade)){
+                atividades[i] = null;
+                atividades[i] = atividades[i + 1];
+                atividades[atividades.length - 1] = null;
+                return true;
+            }
+        }
+        return false;
+    }
+
 }
 
