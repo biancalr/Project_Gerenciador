@@ -1,6 +1,7 @@
 package tads.bianca.gerenciador;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,22 +19,18 @@ import com.google.firebase.auth.FirebaseUser;
 
 import tads.bianca.gerenciador.Model.Atividade;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity implements ListFragment.OnFragmentInteractionListener{
 
     private FirebaseAuth mAuth;
     private FirebaseAuthListener authListener;
-    private final static Atividade[] tasks = {
-            new Atividade("Task 1", "Place", "Short Task", "13/12/2018", "13:20"),
-            new Atividade("Task 2", "Other Place", "Short Task 2", "19/04/2018", "19:15")};
+    //O fragmento não consegue processar isso
+    Atividade atividade = new Atividade
+            ("Task 3", "Another Place", "Short description 3", "18/11/2018", "15:30");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        RecyclerView recyclerView = (RecyclerView)findViewById(R.id.list_view);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(new AtividadeArrayAdapter(tasks, getApplicationContext()));
-        recyclerView.setHasFixedSize(true);
         final FloatingActionButton actionButton = (FloatingActionButton) findViewById(R.id.floatingActionButton);
         actionButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -111,4 +108,12 @@ public class HomeActivity extends AppCompatActivity {
         mAuth.removeAuthStateListener(authListener);
     }
 
+    @Override
+    public void onFragmentInteraction(Atividade atividade) {
+        ListFragment fragment = (ListFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.listfragment);
+        if (fragment != null && fragment.isInLayout()){
+            fragment.setTasks(this.atividade);
+        }
+    }
 }
