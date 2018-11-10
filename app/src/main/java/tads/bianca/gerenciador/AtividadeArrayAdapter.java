@@ -7,7 +7,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -74,9 +73,14 @@ class AtividadeArrayAdapter extends RecyclerView.Adapter<AtividadeArrayAdapter.A
 
         public void bindTask(Atividade task) {
             Log.d(TAG, "bindTask: called");
-            this.task = task;
-            taskName.setText(task.getName());
-            taskDate.setText(task.getDate());
+            if (task != null){
+                this.task = task;
+                taskName.setText(task.getName());
+                taskDate.setText(task.getDate());
+            }else {
+                Toast.makeText(context, "No Tasks Added", Toast.LENGTH_SHORT).show();
+            }
+
         }
 
     }
