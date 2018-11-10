@@ -10,27 +10,35 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.Volley;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import tads.bianca.gerenciador.Model.Atividade;
+import tads.bianca.gerenciador.Model.Localization;
 
 public class HomeActivity extends AppCompatActivity{
 
     private FirebaseAuth mAuth;
     private FirebaseAuthListener authListener;
+    Localization[] localization= {
+            new Localization("Recife"),
+            new Localization("João Pessoa")};
     private Atividade[] tasks = {
-            new Atividade("Task 1", "Place", "Short Task", "13/12/2018", "13:20"),
-            new Atividade("Task 2", "Other Place", "Short Task 2", "19/04/2018", "19:15")};
+            new Atividade("Task 1", localization[1], "Short Task", "13/12/2018", "13:20"),
+            new Atividade("Task 2", localization[2], "Short Task 2", "19/04/2018", "19:15")};
     private RecyclerView recyclerView;
+    private RequestQueue queue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        this.queue = Volley.newRequestQueue(this);
         recyclerView = (RecyclerView)findViewById(R.id.list_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        recyclerView.setAdapter(new AtividadeArrayAdapter(tasks, getApplicationContext()));
+        recyclerView.setAdapter(new AtividadeArrayAdapter(tasks, queue, getApplicationContext()));
         this.mAuth = FirebaseAuth.getInstance();
         this.authListener = new FirebaseAuthListener(this);
 
@@ -94,6 +102,7 @@ public class HomeActivity extends AppCompatActivity{
     @Override
     public void onStop() {
         super.onStop();
+        queue.cancelAll(this);
         mAuth.removeAuthStateListener(authListener);
     }
 

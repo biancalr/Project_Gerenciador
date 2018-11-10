@@ -7,7 +7,7 @@ import java.util.Date;
 public class Atividade {
     private User user;
     private String name;
-    private String localization;
+    private Localization localization;
     private String description;
     private String date;
     private String hour;
@@ -21,7 +21,7 @@ public class Atividade {
         this.hour = null;
     }
 
-    public Atividade(String name, @Nullable String localization, @Nullable String description, String date, @Nullable String hora) {
+    public Atividade(String name, @Nullable Localization localization, @Nullable String description, String date, @Nullable String hora) {
         this.name = name;
         this.localization = localization;
         this.description = description;
@@ -49,7 +49,7 @@ public class Atividade {
         return hour;
     }
 
-    public String getLocalization() {
+    public Localization getLocalization() {
         return localization;
     }
 
@@ -65,7 +65,7 @@ public class Atividade {
         this.description = description;
     }
 
-    public void setLocalization(String localization) {
+    public void setLocalization(Localization localization) {
         this.localization = localization;
     }
 
