@@ -1,10 +1,8 @@
 package tads.bianca.gerenciador;
 
 import android.content.Intent;
-import android.net.Uri;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
@@ -19,46 +17,25 @@ import com.google.firebase.auth.FirebaseUser;
 
 import tads.bianca.gerenciador.Model.Atividade;
 
-public class HomeActivity extends AppCompatActivity implements ListFragment.OnFragmentInteractionListener{
+public class HomeActivity extends AppCompatActivity{
 
     private FirebaseAuth mAuth;
     private FirebaseAuthListener authListener;
-    //O fragmento não consegue processar isso
-    Atividade atividade = new Atividade
-            ("Task 3", "Another Place", "Short description 3", "18/11/2018", "15:30");
+    private Atividade[] tasks = {
+            new Atividade("Task 1", "Place", "Short Task", "13/12/2018", "13:20"),
+            new Atividade("Task 2", "Other Place", "Short Task 2", "19/04/2018", "19:15")};
+    private RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        final FloatingActionButton actionButton = (FloatingActionButton) findViewById(R.id.floatingActionButton);
-        actionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), CreateTaskActivity.class);
-                startActivity(intent);
-            }
-        });
-        final Button buttonSignOut = (Button) findViewById(R.id.button_sign_out);
-        buttonSignOut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                buttonSignOutClick(view);
-            }
-        });
+        recyclerView = (RecyclerView)findViewById(R.id.list_view);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        recyclerView.setAdapter(new AtividadeArrayAdapter(tasks, getApplicationContext()));
         this.mAuth = FirebaseAuth.getInstance();
         this.authListener = new FirebaseAuthListener(this);
 
-    }
-
-    public void buttonSignOutClick(View view) {
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        FirebaseUser user = mAuth.getCurrentUser();
-        if (user != null) {
-            mAuth.signOut();
-        } else {
-            Toast.makeText(HomeActivity.this, "Error!", Toast.LENGTH_SHORT).show();
-        }
     }
 
     @Override
@@ -71,8 +48,8 @@ public class HomeActivity extends AppCompatActivity implements ListFragment.OnFr
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_search:
-                openSearch();
+            case R.id.action_add:
+                openAdd();
                 return true;
             case R.id.action_settings:
                 openSettings();
@@ -80,8 +57,21 @@ public class HomeActivity extends AppCompatActivity implements ListFragment.OnFr
             case R.id.action_select:
                 openSelect();
                 return true;
+            case R.id.action_sign_out:
+                openSignOut();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void openSignOut() {
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = mAuth.getCurrentUser();
+        if (user != null) {
+            mAuth.signOut();
+        } else {
+            Toast.makeText(HomeActivity.this, "Error!", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -93,8 +83,9 @@ public class HomeActivity extends AppCompatActivity implements ListFragment.OnFr
         Toast.makeText(this, "Não implementada.", Toast.LENGTH_SHORT).show();
     }
 
-    private void openSearch() {
-        Toast.makeText(this, "Não implementada.", Toast.LENGTH_SHORT).show();
+    private void openAdd() {
+        Intent intent = new Intent(getApplicationContext(), CreateTaskActivity.class);
+        startActivity(intent);
     }
 
     @Override
@@ -108,12 +99,4 @@ public class HomeActivity extends AppCompatActivity implements ListFragment.OnFr
         mAuth.removeAuthStateListener(authListener);
     }
 
-    @Override
-    public void onFragmentInteraction(Atividade atividade) {
-        ListFragment fragment = (ListFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.listfragment);
-        if (fragment != null && fragment.isInLayout()){
-            fragment.setTasks(this.atividade);
-        }
-    }
 }
