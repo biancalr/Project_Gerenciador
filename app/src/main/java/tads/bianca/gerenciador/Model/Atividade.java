@@ -8,7 +8,7 @@ import java.util.Date;
 
 @IgnoreExtraProperties
 public class Atividade {
-    private static Long id;
+    private static long id = 0;
     private User user;
     private String name;
     private Localization localization;

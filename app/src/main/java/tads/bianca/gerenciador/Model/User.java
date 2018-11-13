@@ -7,7 +7,7 @@ import java.util.List;
 
 @IgnoreExtraProperties
 public class User {
-    private static Long id;
+    private static long id = 0;
     private String name;
     private String email;
     private List<Atividade> atividades;

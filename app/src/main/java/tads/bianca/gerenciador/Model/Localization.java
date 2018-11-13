@@ -5,7 +5,7 @@ import com.google.firebase.database.IgnoreExtraProperties;
 @IgnoreExtraProperties
 public class Localization {
 
-    private static Long id;
+    private static long id = 0;
     private String name;
     private String weather;
     private String temp;
