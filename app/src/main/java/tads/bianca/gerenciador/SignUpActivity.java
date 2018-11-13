@@ -13,6 +13,10 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import tads.bianca.gerenciador.Model.User;
 
 public class SignUpActivity extends AppCompatActivity {
 
@@ -49,7 +53,7 @@ public class SignUpActivity extends AppCompatActivity {
         final String email = edEmail.getText().toString();
         final String password = edPassword.getText().toString();
         if (email != null && password != null && !email.isEmpty() && !password.isEmpty()){
-            FirebaseAuth mAuth = FirebaseAuth.getInstance();
+            final FirebaseAuth mAuth = FirebaseAuth.getInstance();
             mAuth.createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                         @Override
@@ -58,6 +62,14 @@ public class SignUpActivity extends AppCompatActivity {
                                                                "SIGN UP ERROR!";
                             Toast.makeText(SignUpActivity.this, msg,
                                     Toast.LENGTH_SHORT).show();
+                            if (task.isSuccessful()) {
+                                User tempUser = new User(name, email);
+                                DatabaseReference drUsers = FirebaseDatabase.
+
+                                        getInstance().getReference("users");
+                                drUsers.child(mAuth.getCurrentUser().getUid()).
+                                        setValue(tempUser);
+                            }
                         }
                     });
         }else {
