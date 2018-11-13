@@ -8,6 +8,7 @@ import java.util.Date;
 
 @IgnoreExtraProperties
 public class Atividade {
+    private static Long id;
     private User user;
     private String name;
     private Localization localization;
@@ -16,6 +17,7 @@ public class Atividade {
     private String hour;
 
     public Atividade() {
+        id = id + 1;
         this.user = null;
         this.name = null;
         this.localization = null;
@@ -25,6 +27,7 @@ public class Atividade {
     }
 
     public Atividade(String name, @Nullable Localization localization, @Nullable String description, String date, @Nullable String hora) {
+        id = id + 1;
         this.user = null;
         this.name = name;
         this.localization = localization;
