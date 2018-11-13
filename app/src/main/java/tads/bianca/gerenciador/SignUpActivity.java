@@ -16,6 +16,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class SignUpActivity extends AppCompatActivity {
 
+    private EditText edName;
     private EditText edEmail;
     private EditText edPassword;
     private FirebaseAuth mAuth;
@@ -29,6 +30,7 @@ public class SignUpActivity extends AppCompatActivity {
         ab.setDisplayHomeAsUpEnabled(true);
         this.mAuth = FirebaseAuth.getInstance();
         this.authListener = new FirebaseAuthListener(this);
+        edName = findViewById(R.id.edit_name);
         edEmail = findViewById(R.id.edit_email);
         edPassword = findViewById(R.id.edit_password);
         Button buttonSignUp = (Button) findViewById(R.id.button_sign_up);
@@ -42,8 +44,10 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     public void buttonSignUpClick(View view) {
-        String email = edEmail.getText().toString();
-        String password = edPassword.getText().toString();
+
+        final String name = edName.getText().toString();
+        final String email = edEmail.getText().toString();
+        final String password = edPassword.getText().toString();
         if (email != null && password != null && !email.isEmpty() && !password.isEmpty()){
             FirebaseAuth mAuth = FirebaseAuth.getInstance();
             mAuth.createUserWithEmailAndPassword(email, password)
