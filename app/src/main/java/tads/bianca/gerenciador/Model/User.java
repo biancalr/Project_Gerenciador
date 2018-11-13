@@ -1,9 +1,12 @@
 package tads.bianca.gerenciador.Model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class User {
     private String name;
     private String email;
-    private Atividade[] atividades;
+    private List<Atividade> atividades;
 
     public User() {
         this.name = null;
@@ -24,7 +27,7 @@ public class User {
         return email;
     }
 
-    public Atividade[] getAtividades() {
+    public List<Atividade> getAtividades() {
         return atividades;
     }
 
@@ -37,27 +40,19 @@ public class User {
     }
 
     public boolean hasAtividade(){
-        return atividades.length > 0;
+        return atividades.size() > 0;
     }
 
     public void addAtividade(Atividade atividade){
         if (this.atividades == null){
-            this.atividades = new Atividade[1];
+            this.atividades = new ArrayList<>();
         }
         atividade.setUser(this);
-        this.atividades[this.atividades.length] = atividade;
+        this.atividades.add(atividade);
     }
 
     public boolean removeAtividade(Atividade atividade){
-        for (int i = 0; i < this.atividades.length; i++) {
-            if (atividades[i].equals(atividade)){
-                atividades[i] = null;
-                atividades[i] = atividades[i + 1];
-                atividades[atividades.length - 1] = null;
-                return true;
-            }
-        }
-        return false;
+        return this.atividades.remove(atividade);
     }
 
 }

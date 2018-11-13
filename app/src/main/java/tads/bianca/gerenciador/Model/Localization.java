@@ -4,11 +4,13 @@ public class Localization {
     String name;
     String weather;
     String temp;
+    Atividade atividade;
 
     public Localization(String nome){
         this.name = nome;
         this.weather = null;
         this.temp = null;
+        atividade = null;
     }
 
     public String getName() {
@@ -23,6 +25,10 @@ public class Localization {
         return temp;
     }
 
+    public Atividade getAtividade() {
+        return atividade;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
@@ -33,6 +39,10 @@ public class Localization {
 
     public void setTemp(String temp) {
         this.temp = temp;
+    }
+
+    public void setAtividade(Atividade atividade) {
+        this.atividade = atividade;
     }
 
     @Override

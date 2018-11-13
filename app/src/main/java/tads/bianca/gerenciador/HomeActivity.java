@@ -15,6 +15,9 @@ import com.android.volley.toolbox.Volley;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import tads.bianca.gerenciador.Model.Atividade;
 import tads.bianca.gerenciador.Model.Localization;
 
@@ -22,12 +25,10 @@ public class HomeActivity extends AppCompatActivity{
 
     private FirebaseAuth mAuth;
     private FirebaseAuthListener authListener;
-    Localization[] localization= {
+    Localization[] localization = {
             new Localization("Recife"),
             new Localization("João Pessoa")};
-    private Atividade[] tasks = {
-            new Atividade("Task 1", localization[1], "Short Task", "13/12/2018", "13:20"),
-            new Atividade("Task 2", localization[2], "Short Task 2", "19/04/2018", "19:15")};
+    private List<Atividade> tasks;
     private RecyclerView recyclerView;
     private RequestQueue queue;
 
@@ -35,6 +36,7 @@ public class HomeActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        fillAtividadeList();
         this.queue = Volley.newRequestQueue(this);
         recyclerView = (RecyclerView)findViewById(R.id.list_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
@@ -42,6 +44,14 @@ public class HomeActivity extends AppCompatActivity{
         this.mAuth = FirebaseAuth.getInstance();
         this.authListener = new FirebaseAuthListener(this);
 
+    }
+
+    private void fillAtividadeList(){
+        this.tasks = new ArrayList<>();
+        Atividade a = new Atividade("Task 1", localization[0], "Short Task", "13/12/2018", "13:20");
+        tasks.add(a);
+        a = new Atividade("Task 2", localization[1], "Short Task 2", "19/04/2018", "19:15");
+        tasks.add(a);
     }
 
     @Override

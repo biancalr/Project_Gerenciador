@@ -20,6 +20,8 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.List;
+
 import tads.bianca.gerenciador.Model.Atividade;
 import tads.bianca.gerenciador.Model.Localization;
 
@@ -27,11 +29,11 @@ class AtividadeArrayAdapter extends RecyclerView.Adapter<AtividadeArrayAdapter.A
 
     private static final String TAG = "AtividadeArrayAdapter";
 
-    private final Atividade[] tasks;
+    private final List<Atividade> tasks;
     Context context;
     RequestQueue queue;
 
-    public AtividadeArrayAdapter(Atividade[] tasks, RequestQueue queue, Context context) {
+    public AtividadeArrayAdapter(List<Atividade> tasks, RequestQueue queue, Context context) {
         this.tasks = tasks;
         this.context = context;
         this.queue = queue;
@@ -46,7 +48,7 @@ class AtividadeArrayAdapter extends RecyclerView.Adapter<AtividadeArrayAdapter.A
 
     @Override
     public void onBindViewHolder(AtividadeHolder holder, final int position) {
-        holder.bindTask(tasks[position]);
+        holder.bindTask(tasks.get(position));
     }
 
     @Override
@@ -54,7 +56,7 @@ class AtividadeArrayAdapter extends RecyclerView.Adapter<AtividadeArrayAdapter.A
         if (tasks == null) {
             return 0;
         }
-        return tasks.length;
+        return tasks.size();
     }
 
 
@@ -100,7 +102,7 @@ class AtividadeArrayAdapter extends RecyclerView.Adapter<AtividadeArrayAdapter.A
                 loadInBackground(weather, localization);
                 task.setLocalization(localization);
             }
-            
+
         }
 
         private void loadInBackground(final TextView weatherView, final Localization localization) {
@@ -112,7 +114,7 @@ class AtividadeArrayAdapter extends RecyclerView.Adapter<AtividadeArrayAdapter.A
             builder.appendQueryParameter("mode", "json");
             builder.appendQueryParameter("units", "metric");
             builder.appendQueryParameter("cnt", "" + 1);
-            builder.appendQueryParameter("APPID", "SUA CHAVE AQUI");
+            builder.appendQueryParameter("APPID", "afbcd56f2b7e8a0f0ef6b56624f30e76");
             JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET,
                     builder.build().toString(), null,
                     new Response.Listener<JSONObject>() {
@@ -149,7 +151,7 @@ class AtividadeArrayAdapter extends RecyclerView.Adapter<AtividadeArrayAdapter.A
                 JSONObject mainObject = forecastJson.getJSONObject(OWM_MAIN);
                 String description = weatherObject.getString(OWM_DESCRIPTION);
                 double temp = mainObject.getDouble(OWM_TEMPERATURE);
-                return description + " - " + temp;
+                return "weather now: " + description + " - " + temp;
             } catch (JSONException e) {
                 e.printStackTrace();
                 return null;
