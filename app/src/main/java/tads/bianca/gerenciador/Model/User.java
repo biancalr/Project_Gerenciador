@@ -1,8 +1,11 @@
 package tads.bianca.gerenciador.Model;
 
+import com.google.firebase.database.IgnoreExtraProperties;
+
 import java.util.ArrayList;
 import java.util.List;
 
+@IgnoreExtraProperties
 public class User {
     private String name;
     private String email;

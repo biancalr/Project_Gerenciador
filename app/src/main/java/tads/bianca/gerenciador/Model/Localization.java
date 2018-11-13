@@ -1,5 +1,8 @@
 package tads.bianca.gerenciador.Model;
 
+import com.google.firebase.database.IgnoreExtraProperties;
+
+@IgnoreExtraProperties
 public class Localization {
     String name;
     String weather;

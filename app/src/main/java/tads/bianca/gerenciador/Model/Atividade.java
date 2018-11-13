@@ -2,8 +2,11 @@ package tads.bianca.gerenciador.Model;
 
 import android.support.annotation.Nullable;
 
+import com.google.firebase.database.IgnoreExtraProperties;
+
 import java.util.Date;
 
+@IgnoreExtraProperties
 public class Atividade {
     private User user;
     private String name;
@@ -22,6 +25,7 @@ public class Atividade {
     }
 
     public Atividade(String name, @Nullable Localization localization, @Nullable String description, String date, @Nullable String hora) {
+        this.user = null;
         this.name = name;
         this.localization = localization;
         this.description = description;
