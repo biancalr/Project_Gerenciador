@@ -7,20 +7,17 @@ import java.util.List;
 
 @IgnoreExtraProperties
 public class User {
-    private static long id = 0;
     private String name;
     private String email;
     private List<Atividade> atividades;
 
     public User() {
-        id = id + 1;
         this.name = null;
         this.email = null;
         this.atividades = null;
     }
 
     public User(String name, String email) {
-        id = id + 1;
         this.name = name;
         this.email = email;
         this.atividades = null;

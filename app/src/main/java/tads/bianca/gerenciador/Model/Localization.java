@@ -5,14 +5,12 @@ import com.google.firebase.database.IgnoreExtraProperties;
 @IgnoreExtraProperties
 public class Localization {
 
-    private static long id = 0;
     private String name;
     private String weather;
     private String temp;
     private Atividade atividade;
 
     public Localization(String nome){
-        id = id + 1;
         this.name = nome;
         this.weather = null;
         this.temp = null;
