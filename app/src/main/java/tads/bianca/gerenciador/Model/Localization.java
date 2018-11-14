@@ -17,6 +17,13 @@ public class Localization {
         atividade = null;
     }
 
+    public Localization(){
+        this.name = null;
+        this.weather = null;
+        this.temp = null;
+        atividade = null;
+    }
+
     public String getName() {
         return name;
     }
