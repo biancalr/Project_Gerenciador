@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -14,6 +15,11 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +29,8 @@ import tads.bianca.gerenciador.Model.Localization;
 
 public class HomeActivity extends AppCompatActivity{
 
+    private static final String TAG = "HomeActivity";
+
     private FirebaseAuth mAuth;
     private FirebaseAuthListener authListener;
     Localization[] localization = {
@@ -31,23 +39,22 @@ public class HomeActivity extends AppCompatActivity{
     private List<Atividade> tasks;
     private RecyclerView recyclerView;
     private RequestQueue queue;
+    private DatabaseReference drAtividade;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        fillAtividadeList();
+        this.tasks = new ArrayList<>();
         this.queue = Volley.newRequestQueue(this);
-        recyclerView = (RecyclerView)findViewById(R.id.list_view);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        recyclerView.setAdapter(new AtividadeArrayAdapter(tasks, queue, getApplicationContext()));
         this.mAuth = FirebaseAuth.getInstance();
         this.authListener = new FirebaseAuthListener(this);
+        FirebaseDatabase fbDB = FirebaseDatabase.getInstance();
+        drAtividade = fbDB.getReference("atividades");
 
     }
 
     private void fillAtividadeList(){
-        this.tasks = new ArrayList<>();
         Atividade a = new Atividade("Task 1", localization[0], "Short Task", "13/12/2018", "13:20");
         tasks.add(a);
         a = new Atividade("Task 2", localization[1], "Short Task 2", "19/04/2018", "19:15");
@@ -108,6 +115,31 @@ public class HomeActivity extends AppCompatActivity{
     public void onStart() {
         super.onStart();
         mAuth.addAuthStateListener(authListener);
+        drAtividade.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                tasks.clear();
+                fillAtividadeList();
+                for (DataSnapshot atvSnapshot: dataSnapshot.getChildren()){
+                    Atividade atividade = atvSnapshot.getValue(Atividade.class);
+                    Localization localization = atividade.getLocalization();
+                    System.out.println(localization.getName());
+                    if (atividade != null){
+                        tasks.add(atividade);
+                    }
+                }
+                recyclerView = (RecyclerView)findViewById(R.id.list_view);
+                recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+                recyclerView.setAdapter(new AtividadeArrayAdapter(tasks, queue, getApplicationContext()));
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.d(TAG, "Erro: \n" + databaseError.getMessage());
+                System.out.println(databaseError.getMessage());
+            }
+        });
     }
     @Override
     public void onStop() {
