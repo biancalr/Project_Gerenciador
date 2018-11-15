@@ -24,7 +24,7 @@ public class Atividade {
         this.hour = null;
     }
 
-    public Atividade(String name, @Nullable Localization localization, @Nullable String description, String date, @Nullable String hora) {
+    public Atividade(String name, Localization localization, @Nullable String description, String date, @Nullable String hora) {
         this.user = null;
         this.name = name;
         this.localization = localization;
