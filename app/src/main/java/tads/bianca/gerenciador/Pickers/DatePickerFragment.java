@@ -6,6 +6,8 @@ import android.app.DialogFragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TextView;
 
@@ -17,8 +19,9 @@ public class DatePickerFragment extends DialogFragment
         implements DatePickerDialog.OnDateSetListener  {
     private static final String TAG = "DatePickFragment";
 
-    private TextView mDisplayDate;
+//    private TextView mDisplayDate;
     private String date;
+    private Button mButtonDisplay;
 
     public OnInputSelected mOnInputSelected;
 
@@ -35,11 +38,9 @@ public class DatePickerFragment extends DialogFragment
     @Override
     public void onDateSet(DatePicker view, int year, int month, int day) {
         month++;
-        mDisplayDate = (TextView) getActivity().findViewById(R.id.dateFragment);
-        date = month + "/" + day + "/" + year;
-        if (mDisplayDate != null){
-            mDisplayDate.setText(date);
-        }
+        mButtonDisplay = (Button) getActivity().findViewById(R.id.button_create_date);
+        date = day + "/" + month + "/" + year;
+        mButtonDisplay.setText(date);
 
     }
 

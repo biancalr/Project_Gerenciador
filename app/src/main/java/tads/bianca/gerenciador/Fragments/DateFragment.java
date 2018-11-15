@@ -4,9 +4,11 @@ import android.app.DialogFragment;
 import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import tads.bianca.gerenciador.Pickers.DatePickerFragment;
@@ -27,11 +29,13 @@ public class DateFragment extends Fragment implements DatePickerFragment.OnInput
     private static final String ARG_PARAM2 = "param2";
 
     // TODO: Rename and change types of parameters
+    private static final String TAG = "DateFragment";
     private String mParam1;
     private String mParam2;
+    private Button button;
     DialogFragment datePickerFragment;
 
-    private TextView date;
+    private Button date;
 
     private OnFragmentInteractionListener mListener;
 
@@ -70,9 +74,16 @@ public class DateFragment extends Fragment implements DatePickerFragment.OnInput
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_date, container, false);
-        datePickerFragment = new DatePickerFragment();
-        datePickerFragment.setTargetFragment(DateFragment.this, 1);
-        datePickerFragment.show(getFragmentManager(), "DatePicker");
+        button = (Button) view.findViewById(R.id.button_create_date);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.e(TAG, "DateFragment onClick: opening Dialog");
+                datePickerFragment = new DatePickerFragment();
+                datePickerFragment.setTargetFragment(DateFragment.this, 1);
+                datePickerFragment.show(getFragmentManager(), "DatePicker");
+            }
+        });
         return view;
     }
 
@@ -96,7 +107,7 @@ public class DateFragment extends Fragment implements DatePickerFragment.OnInput
 
     @Override
     public String getDate() {
-        date = (TextView) getView().findViewById(R.id.dateFragment);
+        date = (Button) getView().findViewById(R.id.button_create_date);
         return date.getText().toString();
     }
 

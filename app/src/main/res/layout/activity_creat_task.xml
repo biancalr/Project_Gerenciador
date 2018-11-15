@@ -7,47 +7,58 @@
     android:orientation="vertical"
     tools:context=".CreateTaskActivity">
 
-    <EditText android:id="@+id/create_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="text"
-        android:hint="@string/edit_name"
-        android:layout_marginVertical="2pt"/>
-
-    <LinearLayout
-        android:orientation="vertical"
-        android:id="@+id/date_create"
+    <EditText
+        android:id="@+id/create_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginVertical="2pt"
-        class="tads.bianca.gerenciador.Fragments.DateFragment"/>
+        android:hint="@string/edit_name"
+        android:inputType="text" />
 
-    <EditText android:id="@+id/create_hour"
+    <LinearLayout
+        android:id="@+id/date_create"
+        class="tads.bianca.gerenciador.Fragments.DateFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="text"
+        android:layout_marginVertical="2pt"
+        android:orientation="vertical" />
+
+    <LinearLayout
+        android:id="@+id/hour_create"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" />
+
+    <EditText
+        android:id="@+id/create_hour"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="2pt"
         android:hint="Hora"
-        android:layout_marginVertical="2pt"/>
+        android:inputType="text" />
 
-    <EditText android:id="@+id/create_location"
+    <EditText
+        android:id="@+id/create_location"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="text"
+        android:layout_marginVertical="2pt"
         android:hint="Location"
-        android:layout_marginVertical="2pt"/>
+        android:inputType="text" />
 
-    <EditText android:id="@+id/create_description"
+    <EditText
+        android:id="@+id/create_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="text"
+        android:layout_marginVertical="2pt"
         android:hint="Description"
-        android:layout_marginVertical="2pt"/>
+        android:inputType="text" />
 
-    <Spinner android:contextClickable="true"
+    <Spinner
         android:id="@+id/spinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginVertical="2pt"/>
+        android:layout_marginVertical="2pt"
+        android:contextClickable="true" />
 
     <Button
         android:id="@+id/button_create_task"
