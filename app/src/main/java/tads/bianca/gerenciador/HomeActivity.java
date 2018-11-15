@@ -33,9 +33,6 @@ public class HomeActivity extends AppCompatActivity{
 
     private FirebaseAuth mAuth;
     private FirebaseAuthListener authListener;
-    Localization[] localization = {
-            new Localization("Recife"),
-            new Localization("João Pessoa")};
     private List<Atividade> tasks;
     private RecyclerView recyclerView;
     private RequestQueue queue;
@@ -52,13 +49,6 @@ public class HomeActivity extends AppCompatActivity{
         FirebaseDatabase fbDB = FirebaseDatabase.getInstance();
         drAtividade = fbDB.getReference("atividades");
 
-    }
-
-    private void fillAtividadeList(){
-        Atividade a = new Atividade("Task 1", localization[0], "Short Task", "13/12/2018", "13:20");
-        tasks.add(a);
-        a = new Atividade("Task 2", localization[1], "Short Task 2", "19/04/2018", "19:15");
-        tasks.add(a);
     }
 
     @Override
@@ -119,7 +109,6 @@ public class HomeActivity extends AppCompatActivity{
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 tasks.clear();
-                fillAtividadeList();
                 for (DataSnapshot atvSnapshot: dataSnapshot.getChildren()){
                     Atividade atividade = atvSnapshot.getValue(Atividade.class);
                     Localization localization = atividade.getLocalization();
