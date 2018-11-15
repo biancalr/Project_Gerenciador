@@ -1,4 +1,4 @@
-package tads.bianca.gerenciador;
+package tads.bianca.gerenciador.Pickers;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -10,6 +10,8 @@ import android.widget.DatePicker;
 import android.widget.TextView;
 
 import java.util.Calendar;
+
+import tads.bianca.gerenciador.R;
 
 public class DatePickerFragment extends DialogFragment
         implements DatePickerDialog.OnDateSetListener  {

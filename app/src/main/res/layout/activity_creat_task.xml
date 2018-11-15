@@ -20,7 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginVertical="2pt"
-        class="tads.bianca.gerenciador.DateFragment"/>
+        class="tads.bianca.gerenciador.Fragments.DateFragment"/>
 
     <EditText android:id="@+id/create_hour"
         android:layout_width="match_parent"
