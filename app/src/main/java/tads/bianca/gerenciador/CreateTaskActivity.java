@@ -23,6 +23,7 @@ public class CreateTaskActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private static final String TAG = "CreateTaskActivity";
     private DatabaseReference drAtividade;
+    Atividade atividade;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +53,7 @@ public class CreateTaskActivity extends AppCompatActivity {
         try {
             Log.d(TAG, "addTask: called");
             //Criar o objeto Atividade
-            Atividade atividade = new Atividade();
+            atividade = new Atividade();
             //Pegar os dados do layout
             EditText name = (EditText) findViewById(R.id.create_name);
             EditText description = (EditText) findViewById(R.id.create_description);
