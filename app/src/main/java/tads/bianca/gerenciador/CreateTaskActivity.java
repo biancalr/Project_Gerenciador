@@ -1,5 +1,6 @@
 package tads.bianca.gerenciador;
 
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -23,7 +24,8 @@ public class CreateTaskActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private static final String TAG = "CreateTaskActivity";
     private DatabaseReference drAtividade;
-    Atividade atividade;
+    private Atividade atividade;
+    DateFragment fragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +33,14 @@ public class CreateTaskActivity extends AppCompatActivity {
         setContentView(R.layout.activity_creat_task);
         ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
+
         this.mAuth = FirebaseAuth.getInstance();
+
+        fragment = new DateFragment();
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.replace(R.id.date_create, fragment, "DateFragment");
+        transaction.commit();
+
         FirebaseDatabase fbDB = FirebaseDatabase.getInstance();
         drAtividade = fbDB.getReference("atividades");
         Button buttonCreateTaskClick = (Button) findViewById(R.id.button_create_task);
@@ -57,14 +66,13 @@ public class CreateTaskActivity extends AppCompatActivity {
             //Pegar os dados do layout
             EditText name = (EditText) findViewById(R.id.create_name);
             EditText description = (EditText) findViewById(R.id.create_description);
-            EditText date = (EditText) findViewById(R.id.create_date);
             EditText hour = (EditText) findViewById(R.id.create_hour);
             EditText loc = (EditText) findViewById(R.id.create_location);
             Localization l = new Localization(loc.getText().toString());
             //setando os dados recuperados em atividade
             atividade.setName(name.getText().toString().trim());
             atividade.setDescription(description.getText().toString().trim());
-            atividade.setDate(date.getText().toString().trim());
+            atividade.setDate(fragment.getDate().trim());
             atividade.setHour(hour.getText().toString().trim());
             atividade.setLocalization(l);
             //criando um id
