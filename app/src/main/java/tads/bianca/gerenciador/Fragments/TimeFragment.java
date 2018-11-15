@@ -10,35 +10,36 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import tads.bianca.gerenciador.Pickers.DatePickerFragment;
+import tads.bianca.gerenciador.Pickers.TimePickerFragment;
 import tads.bianca.gerenciador.R;
 
+import static android.support.constraint.Constraints.TAG;
 
 /**
+ * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link DateFragment.OnFragmentInteractionListener} interface
+ * {@link TimeFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link DateFragment#newInstance} factory method to
+ * Use the {@link TimeFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class DateFragment extends Fragment implements DatePickerFragment.OnInputSelected{
+public class TimeFragment extends Fragment implements TimePickerFragment.OnInputSelected{
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
     // TODO: Rename and change types of parameters
-    private static final String TAG = "DateFragment";
     private String mParam1;
     private String mParam2;
     private Button button;
-    DialogFragment datePickerFragment;
+    DialogFragment timePickerFragment;
 
-    private Button date;
+    private Button time;
 
     private OnFragmentInteractionListener mListener;
 
-    public DateFragment() {
+    public TimeFragment() {
         // Required empty public constructor
     }
 
@@ -48,11 +49,11 @@ public class DateFragment extends Fragment implements DatePickerFragment.OnInput
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment DateFragment.
+     * @return A new instance of fragment TimeFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static DateFragment newInstance(String param1, String param2) {
-        DateFragment fragment = new DateFragment();
+    public static TimeFragment newInstance(String param1, String param2) {
+        TimeFragment fragment = new TimeFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -72,21 +73,19 @@ public class DateFragment extends Fragment implements DatePickerFragment.OnInput
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_date, container, false);
-        button = (Button) view.findViewById(R.id.button_create_date);
+        View view = inflater.inflate(R.layout.fragment_hour, container, false);
+        button = (Button) view.findViewById(R.id.button_create_time);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Log.e(TAG, "DateFragment onClick: opening Dialog");
-                datePickerFragment = new DatePickerFragment();
-                datePickerFragment.setTargetFragment(DateFragment.this, 1);
-                datePickerFragment.show(getFragmentManager(), "DatePicker");
+                timePickerFragment = new TimePickerFragment();
+                timePickerFragment.setTargetFragment(TimeFragment.this, 2);
+                timePickerFragment.show(getFragmentManager(), "TimePicker");
             }
         });
         return view;
     }
-
-
 
     @Override
     public void onAttach(Context context) {
@@ -105,9 +104,9 @@ public class DateFragment extends Fragment implements DatePickerFragment.OnInput
     }
 
     @Override
-    public String getDate() {
-        date = (Button) getView().findViewById(R.id.button_create_date);
-        return date.getText().toString();
+    public String getTime() {
+        time = (Button) getView().findViewById(R.id.button_create_time);
+        return time.getText().toString();
     }
 
     /**
@@ -121,6 +120,6 @@ public class DateFragment extends Fragment implements DatePickerFragment.OnInput
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-        String getDate();
+        String getTime();
     }
 }

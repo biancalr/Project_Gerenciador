@@ -17,6 +17,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import tads.bianca.gerenciador.Fragments.DateFragment;
+import tads.bianca.gerenciador.Fragments.TimeFragment;
 import tads.bianca.gerenciador.Model.Atividade;
 import tads.bianca.gerenciador.Model.Localization;
 
@@ -26,7 +27,8 @@ public class CreateTaskActivity extends AppCompatActivity {
     private static final String TAG = "CreateTaskActivity";
     private DatabaseReference drAtividade;
     private Atividade atividade;
-    DateFragment fragment;
+    DateFragment fragmentDate;
+    TimeFragment fragmentTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,10 +39,15 @@ public class CreateTaskActivity extends AppCompatActivity {
 
         this.mAuth = FirebaseAuth.getInstance();
 
-        fragment = new DateFragment();
+        fragmentDate = new DateFragment();
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        transaction.replace(R.id.date_create, fragment, "DateFragment");
+        transaction.replace(R.id.date_create, fragmentDate, "DateFragment");
         transaction.commit();
+
+        fragmentTime = new TimeFragment();
+        FragmentTransaction transaction2 = getFragmentManager().beginTransaction();
+        transaction2.replace(R.id.hour_create, fragmentTime, "TimeFragment");
+        transaction2.commit();
 
         FirebaseDatabase fbDB = FirebaseDatabase.getInstance();
         drAtividade = fbDB.getReference("atividades");
@@ -59,35 +66,38 @@ public class CreateTaskActivity extends AppCompatActivity {
 
     }
 
-    private boolean createAtividade() {
+    private void createAtividade() {
         try {
             Log.d(TAG, "addTask: called");
+
             //Criar o objeto Atividade
             atividade = new Atividade();
+
             //Pegar os dados do layout
             EditText name = (EditText) findViewById(R.id.create_name);
             EditText description = (EditText) findViewById(R.id.create_description);
-            EditText hour = (EditText) findViewById(R.id.create_hour);
             EditText loc = (EditText) findViewById(R.id.create_location);
             Localization l = new Localization(loc.getText().toString());
+
             //setando os dados recuperados em atividade
             atividade.setName(name.getText().toString().trim());
             atividade.setDescription(description.getText().toString().trim());
-            atividade.setDate(fragment.getDate().trim());
-            atividade.setHour(hour.getText().toString().trim());
+            atividade.setDate(fragmentDate.getDate().trim());
+            atividade.setHour(fragmentTime.getTime().trim());
             atividade.setLocalization(l);
+
             //criando um id
             String id = drAtividade.push().getKey();
+
             //setando a atividade como um child
             drAtividade.child(id).setValue(atividade);
+
             //intent para HomeActivity
             Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
             startActivity(intent);
-            return true;
         } catch (Exception e) {
             Log.d(TAG, "Erro: \n" + e.getMessage());
             System.out.println("Erro: \n" + e.getMessage());
-            return false;
         }
 
     }

@@ -6,10 +6,8 @@ import android.app.DialogFragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.TextView;
 
 import java.util.Calendar;
 
@@ -19,7 +17,6 @@ public class DatePickerFragment extends DialogFragment
         implements DatePickerDialog.OnDateSetListener  {
     private static final String TAG = "DatePickFragment";
 
-//    private TextView mDisplayDate;
     private String date;
     private Button mButtonDisplay;
 

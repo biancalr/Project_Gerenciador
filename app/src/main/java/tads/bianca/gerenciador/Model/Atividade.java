@@ -4,8 +4,6 @@ import android.support.annotation.Nullable;
 
 import com.google.firebase.database.IgnoreExtraProperties;
 
-import java.util.Date;
-
 @IgnoreExtraProperties
 public class Atividade {
     private User user;
