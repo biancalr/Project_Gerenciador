@@ -4,11 +4,13 @@ import android.support.annotation.Nullable;
 
 import com.google.firebase.database.IgnoreExtraProperties;
 
+import java.io.Serializable;
+
 @IgnoreExtraProperties
-public class Atividade {
+public class Atividade implements Serializable{
     private User user;
     private String name;
-    private Localization localization;
+    private transient Localization localization;
     private String description;
     private String date;
     private String hour;

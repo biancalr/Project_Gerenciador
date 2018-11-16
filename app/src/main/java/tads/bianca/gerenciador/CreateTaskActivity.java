@@ -51,6 +51,7 @@ public class CreateTaskActivity extends AppCompatActivity {
 
         FirebaseDatabase fbDB = FirebaseDatabase.getInstance();
         drAtividade = fbDB.getReference("atividades");
+
         Button buttonCreateTaskClick = (Button) findViewById(R.id.button_create_task);
         buttonCreateTaskClick.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,6 +67,9 @@ public class CreateTaskActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Lembrar de organizar esse método
+     */
     private void createAtividade() {
         try {
             Log.d(TAG, "addTask: called");

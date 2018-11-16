@@ -20,6 +20,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.List;
 
 import tads.bianca.gerenciador.Model.Atividade;
@@ -85,6 +86,7 @@ class AtividadeArrayAdapter extends RecyclerView.Adapter<AtividadeArrayAdapter.A
             Toast.makeText(v.getContext(), "Task selected: " +
                     task.getName(), Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(context, AtividadeDescriptionActivity.class);
+            intent.putExtra("task", this.task);
             context.startActivity(intent);
         }
 
