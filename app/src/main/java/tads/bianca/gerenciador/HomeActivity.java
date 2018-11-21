@@ -119,7 +119,7 @@ public class HomeActivity extends AppCompatActivity{
                 }
                 recyclerView = (RecyclerView)findViewById(R.id.list_view);
                 recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-                recyclerView.setAdapter(new AtividadeArrayAdapter(tasks, queue, getApplicationContext()));
+                recyclerView.setAdapter(new AtividadeListAdapter(tasks, queue, getApplicationContext()));
 
             }
 

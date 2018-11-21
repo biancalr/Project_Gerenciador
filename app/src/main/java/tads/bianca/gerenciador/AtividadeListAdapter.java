@@ -25,15 +25,15 @@ import java.util.List;
 import tads.bianca.gerenciador.Model.Atividade;
 import tads.bianca.gerenciador.Model.Localization;
 
-class AtividadeArrayAdapter extends RecyclerView.Adapter<AtividadeArrayAdapter.AtividadeHolder> {
+class AtividadeListAdapter extends RecyclerView.Adapter<AtividadeListAdapter.AtividadeHolder> {
 
-    private static final String TAG = "AtividadeArrayAdapter";
+    private static final String TAG = "AtividadeListAdapter";
 
     private final List<Atividade> tasks;
     Context context;
     RequestQueue queue;
 
-    public AtividadeArrayAdapter(List<Atividade> tasks, RequestQueue queue, Context context) {
+    public AtividadeListAdapter(List<Atividade> tasks, RequestQueue queue, Context context) {
         this.tasks = tasks;
         this.context = context;
         this.queue = queue;
