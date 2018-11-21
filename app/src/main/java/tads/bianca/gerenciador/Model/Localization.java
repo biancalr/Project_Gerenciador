@@ -2,26 +2,25 @@ package tads.bianca.gerenciador.Model;
 
 import com.google.firebase.database.IgnoreExtraProperties;
 
+import java.io.Serializable;
+
 @IgnoreExtraProperties
-public class Localization {
+public class Localization implements Serializable{
 
     private String name;
-    private String weather;
-    private String temp;
-    private Atividade atividade;
+    private transient String weather;
+    private transient String temp;
 
     public Localization(String nome){
         this.name = nome;
         this.weather = null;
         this.temp = null;
-        atividade = null;
     }
 
     public Localization(){
         this.name = null;
         this.weather = null;
         this.temp = null;
-        atividade = null;
     }
 
     public String getName() {
@@ -36,10 +35,6 @@ public class Localization {
         return temp;
     }
 
-    public Atividade getAtividade() {
-        return atividade;
-    }
-
     public void setName(String name) {
         this.name = name;
     }
@@ -50,10 +45,6 @@ public class Localization {
 
     public void setTemp(String temp) {
         this.temp = temp;
-    }
-
-    public void setAtividade(Atividade atividade) {
-        this.atividade = atividade;
     }
 
     @Override

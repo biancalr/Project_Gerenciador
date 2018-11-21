@@ -51,7 +51,6 @@ public class User {
         if (this.atividades == null){
             this.atividades = new ArrayList<>();
         }
-        atividade.setUser(this);
         this.atividades.add(atividade);
     }
 

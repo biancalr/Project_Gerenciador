@@ -8,7 +8,6 @@ import java.io.Serializable;
 
 @IgnoreExtraProperties
 public class Atividade implements Serializable{
-    private User user;
     private String name;
     private transient Localization localization;
     private String description;
@@ -16,7 +15,6 @@ public class Atividade implements Serializable{
     private String hour;
 
     public Atividade() {
-        this.user = null;
         this.name = null;
         this.localization = null;
         this.description = null;
@@ -25,16 +23,11 @@ public class Atividade implements Serializable{
     }
 
     public Atividade(String name, Localization localization, @Nullable String description, String date, @Nullable String hora) {
-        this.user = null;
         this.name = name;
         this.localization = localization;
         this.description = description;
         this.date = date;
         this.hour = hora;
-    }
-
-    public User getUser() {
-        return user;
     }
 
     public String getName() {
@@ -55,10 +48,6 @@ public class Atividade implements Serializable{
 
     public Localization getLocalization() {
         return localization;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }
 
     public void setName(String name) {
