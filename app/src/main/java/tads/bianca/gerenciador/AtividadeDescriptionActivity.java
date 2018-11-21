@@ -20,13 +20,12 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import tads.bianca.gerenciador.Model.Atividade;
+import tads.bianca.gerenciador.Model.Localization;
 
 public class AtividadeDescriptionActivity extends AppCompatActivity {
 
     private static final String TAG = "AtividadeDescriptionActivity";
     private Atividade atividade;
-    private FirebaseDatabase firebaseDatabase;
-    private DatabaseReference databaseReference;
 
     private TextView nome;
     private TextView localizacao;
@@ -42,9 +41,10 @@ public class AtividadeDescriptionActivity extends AppCompatActivity {
         ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
         atividade = (Atividade) getIntent().getSerializableExtra("task");
+        atividade.setLocalization(new Localization((String) getIntent().getSerializableExtra("localization")));
         Log.e(TAG, "task: " + atividade.getName());
-        inicializarComponentes();
-        preencherComponentes(atividade);
+        initializeComponents();
+        fillComponents(atividade);
         Button buttonOpenRoute = (Button) findViewById(R.id.button_open_route);
         buttonOpenRoute.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,38 +56,19 @@ public class AtividadeDescriptionActivity extends AppCompatActivity {
 
     }
 
-    private void searchTask(final String taskName) {
-        Query query;
-        query = databaseReference.child("atividades").child("name").equalTo(taskName);
-        query.addValueEventListener(new ValueEventListener() {
-            @SuppressLint("LongLogTag")
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                atividade = dataSnapshot.getValue(Atividade.class);
-                Log.e(TAG, "search task: called");
-                preencherComponentes(atividade);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
+    private void fillComponents(Atividade atividade) {
+        this.nome.setText("Nome: " + atividade.getName());
+        this.data.setText("Data: " + atividade.getDate());
+        this.hora.setText("Hora: " + atividade.getHour());
+        this.localizacao.setText("Localization: " + atividade.getLocalization().getName());
+        this.descricao.setText("Description: " + atividade.getDescription());
     }
 
-    private void preencherComponentes(Atividade atividade) {
-        this.nome.setText(atividade.getName());
-        this.data.setText(atividade.getDate());
-        this.hora.setText(atividade.getHour());
-//        this.localizacao.setText(atividade.getLocalization().getName());
-        this.descricao.setText(atividade.getDescription());
-    }
-
-    private void inicializarComponentes(){
+    private void initializeComponents(){
         this.nome = (TextView) findViewById(R.id.descrip_name);
         this.data = (TextView) findViewById(R.id.descrip_date);
         this.hora = (TextView) findViewById(R.id.descrip_hour);
-//        this.localizacao = (TextView) findViewById(R.id.descrip_location);
+        this.localizacao = (TextView) findViewById(R.id.descrip_location);
         this.descricao = (TextView) findViewById(R.id.descrip_description);
     }
 

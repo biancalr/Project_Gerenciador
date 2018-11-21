@@ -30,6 +30,11 @@ public class CreateTaskActivity extends AppCompatActivity {
     DateFragment fragmentDate;
     TimeFragment fragmentTime;
 
+    private EditText name;
+    private EditText description;
+    private EditText localization;
+    private Localization loc;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,15 +44,7 @@ public class CreateTaskActivity extends AppCompatActivity {
 
         this.mAuth = FirebaseAuth.getInstance();
 
-        fragmentDate = new DateFragment();
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        transaction.replace(R.id.date_create, fragmentDate, "DateFragment");
-        transaction.commit();
-
-        fragmentTime = new TimeFragment();
-        FragmentTransaction transaction2 = getFragmentManager().beginTransaction();
-        transaction2.replace(R.id.hour_create, fragmentTime, "TimeFragment");
-        transaction2.commit();
+        preencherFragmentos();
 
         FirebaseDatabase fbDB = FirebaseDatabase.getInstance();
         drAtividade = fbDB.getReference("atividades");
@@ -67,9 +64,35 @@ public class CreateTaskActivity extends AppCompatActivity {
 
     }
 
-    /**
-     * Lembrar de organizar esse método
-     */
+    private void preencherFragmentos(){
+        this.fragmentDate = new DateFragment();
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.replace(R.id.date_create, fragmentDate, "DateFragment");
+        transaction.commit();
+
+        this.fragmentTime = new TimeFragment();
+        FragmentTransaction transaction2 = getFragmentManager().beginTransaction();
+        transaction2.replace(R.id.hour_create, fragmentTime, "TimeFragment");
+        transaction2.commit();
+    }
+
+    private void inicializarComponentes(){
+        //Pegar os dados do layout
+        this.name = (EditText) findViewById(R.id.create_name);
+        this.description = (EditText) findViewById(R.id.create_description);
+        this.localization = (EditText) findViewById(R.id.create_location);
+        this.loc = new Localization(this.localization.getText().toString());
+    }
+
+    private void preencherComponentes(){
+        //setando os dados recuperados em atividade
+        atividade.setName(name.getText().toString().trim());
+        atividade.setDescription(description.getText().toString().trim());
+        atividade.setDate(fragmentDate.getDate().trim());
+        atividade.setHour(fragmentTime.getTime().trim());
+        atividade.setLocalization(this.loc);
+    }
+
     private void createAtividade() {
         try {
             Log.d(TAG, "addTask: called");
@@ -77,18 +100,8 @@ public class CreateTaskActivity extends AppCompatActivity {
             //Criar o objeto Atividade
             atividade = new Atividade();
 
-            //Pegar os dados do layout
-            EditText name = (EditText) findViewById(R.id.create_name);
-            EditText description = (EditText) findViewById(R.id.create_description);
-            EditText loc = (EditText) findViewById(R.id.create_location);
-            Localization l = new Localization(loc.getText().toString());
-
-            //setando os dados recuperados em atividade
-            atividade.setName(name.getText().toString().trim());
-            atividade.setDescription(description.getText().toString().trim());
-            atividade.setDate(fragmentDate.getDate().trim());
-            atividade.setHour(fragmentTime.getTime().trim());
-            atividade.setLocalization(l);
+            inicializarComponentes();
+            preencherComponentes();
 
             //criando um id
             String id = drAtividade.push().getKey();
