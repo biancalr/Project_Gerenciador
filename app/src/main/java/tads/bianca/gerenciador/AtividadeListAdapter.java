@@ -3,6 +3,7 @@ package tads.bianca.gerenciador;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Parcelable;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,6 +21,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.List;
 
 import tads.bianca.gerenciador.Model.Atividade;

@@ -24,8 +24,8 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import tads.bianca.gerenciador.Control.FirebaseAuthListener;
 import tads.bianca.gerenciador.Model.Atividade;
-import tads.bianca.gerenciador.Model.Localization;
 
 public class HomeActivity extends AppCompatActivity{
 
@@ -47,7 +47,7 @@ public class HomeActivity extends AppCompatActivity{
         this.mAuth = FirebaseAuth.getInstance();
         this.authListener = new FirebaseAuthListener(this);
         FirebaseDatabase fbDB = FirebaseDatabase.getInstance();
-        drAtividade = fbDB.getReference("atividades");
+        drAtividade = fbDB.getReference("users").child(mAuth.getCurrentUser().getUid()).child("atividades");
 
     }
 
@@ -111,8 +111,6 @@ public class HomeActivity extends AppCompatActivity{
                 tasks.clear();
                 for (DataSnapshot atvSnapshot: dataSnapshot.getChildren()){
                     Atividade atividade = atvSnapshot.getValue(Atividade.class);
-                    Localization localization = atividade.getLocalization();
-                    System.out.println(localization.getName());
                     if (atividade != null){
                         tasks.add(atividade);
                     }

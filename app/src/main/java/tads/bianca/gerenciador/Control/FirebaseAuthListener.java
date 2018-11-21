@@ -1,4 +1,4 @@
-package tads.bianca.gerenciador;
+package tads.bianca.gerenciador.Control;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -6,6 +6,9 @@ import android.support.annotation.NonNull;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
+import tads.bianca.gerenciador.HomeActivity;
+import tads.bianca.gerenciador.MainActivity;
 
 public class FirebaseAuthListener implements FirebaseAuth.AuthStateListener {
 

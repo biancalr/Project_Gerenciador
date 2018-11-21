@@ -16,6 +16,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import tads.bianca.gerenciador.Control.FirebaseAuthListener;
 import tads.bianca.gerenciador.Model.User;
 
 public class SignUpActivity extends AppCompatActivity {

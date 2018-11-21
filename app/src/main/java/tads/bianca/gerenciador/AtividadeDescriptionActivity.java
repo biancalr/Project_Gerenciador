@@ -48,9 +48,9 @@ public class AtividadeDescriptionActivity extends AppCompatActivity {
     }
 
     private void fillComponents(Atividade atividade) {
-        this.nome.setText("Nome: " + atividade.getName());
-        this.data.setText("Data: " + atividade.getDate());
-        this.hora.setText("Hora: " + atividade.getHour());
+        this.nome.setText("Name: " + atividade.getName());
+        this.data.setText("Date: " + atividade.getDate());
+        this.hora.setText("Hour: " + atividade.getHour());
         this.localizacao.setText("Localization: " + atividade.getLocalization().getName());
         this.descricao.setText("Description: " + atividade.getDescription());
     }

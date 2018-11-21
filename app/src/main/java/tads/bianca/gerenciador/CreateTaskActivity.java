@@ -13,6 +13,9 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -41,14 +44,10 @@ public class CreateTaskActivity extends AppCompatActivity {
         setContentView(R.layout.activity_creat_task);
         ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
-
         this.mAuth = FirebaseAuth.getInstance();
-
-        preencherFragmentos();
-
+        fillFragments();
         FirebaseDatabase fbDB = FirebaseDatabase.getInstance();
-        drAtividade = fbDB.getReference("atividades");
-
+        drAtividade = fbDB.getReference("users").child(mAuth.getCurrentUser().getUid());
         Button buttonCreateTaskClick = (Button) findViewById(R.id.button_create_task);
         buttonCreateTaskClick.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,7 +63,7 @@ public class CreateTaskActivity extends AppCompatActivity {
 
     }
 
-    private void preencherFragmentos(){
+    private void fillFragments() {
         this.fragmentDate = new DateFragment();
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.replace(R.id.date_create, fragmentDate, "DateFragment");
@@ -76,16 +75,16 @@ public class CreateTaskActivity extends AppCompatActivity {
         transaction2.commit();
     }
 
-    private void inicializarComponentes(){
-        //Pegar os dados do layout
+    private void initializeComponents() {
+        //Catch the data from the layout
         this.name = (EditText) findViewById(R.id.create_name);
         this.description = (EditText) findViewById(R.id.create_description);
         this.localization = (EditText) findViewById(R.id.create_location);
         this.loc = new Localization(this.localization.getText().toString());
     }
 
-    private void preencherComponentes(){
-        //setando os dados recuperados em atividade
+    private void fillComponents() {
+        //set the data to atividade
         atividade.setName(name.getText().toString().trim());
         atividade.setDescription(description.getText().toString().trim());
         atividade.setDate(fragmentDate.getDate().trim());
@@ -96,23 +95,16 @@ public class CreateTaskActivity extends AppCompatActivity {
     private void createAtividade() {
         try {
             Log.d(TAG, "addTask: called");
-
-            //Criar o objeto Atividade
             atividade = new Atividade();
-
-            inicializarComponentes();
-            preencherComponentes();
-
-            //criando um id
+            initializeComponents();
+            fillComponents();
+            //Creating an id
             String id = drAtividade.push().getKey();
-
-            //setando a atividade como um child
-            drAtividade.child(id).setValue(atividade);
-
-            //intent para HomeActivity
+            //Set the atividade as a child
+            drAtividade.child("atividades").child(id).setValue(atividade);
             Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
             startActivity(intent);
-        } catch (Exception e) {
+        }catch (Exception e) {
             Log.d(TAG, "Erro: \n" + e.getMessage());
             System.out.println("Erro: \n" + e.getMessage());
         }

@@ -14,10 +14,16 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
+import tads.bianca.gerenciador.Control.FirebaseAuthListener;
+import tads.bianca.gerenciador.Model.User;
+
 public class MainActivity extends AppCompatActivity {
+
+    private User user;
 
     private EditText edEmail;
     private EditText edPassword;
+
     private FirebaseAuth mAuth;
     private FirebaseAuthListener authListener;
 
@@ -50,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
         String login = edEmail.getText().toString();
         String passwd = edPassword.getText().toString();
         if (login != null && passwd != null && !login.isEmpty() && !passwd.isEmpty()){
-            FirebaseAuth mAuth = FirebaseAuth.getInstance();
+            final FirebaseAuth mAuth = FirebaseAuth.getInstance();
             mAuth.signInWithEmailAndPassword(login, passwd)
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                         @Override
