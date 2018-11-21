@@ -36,7 +36,11 @@ public class TimePickerFragment extends DialogFragment
 
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
         mButtonDisplay = (Button) getActivity().findViewById(R.id.button_create_time);
-        time = hourOfDay + ":" + minute;
+        if (minute < 10){
+            time = hourOfDay + " : 0" + minute;
+        }else {
+            time = hourOfDay + " : " + minute;
+        }
         mButtonDisplay.setText(time);
     }
 
