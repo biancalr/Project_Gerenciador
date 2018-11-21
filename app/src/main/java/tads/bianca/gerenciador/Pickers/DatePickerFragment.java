@@ -36,7 +36,17 @@ public class DatePickerFragment extends DialogFragment
     public void onDateSet(DatePicker view, int year, int month, int day) {
         month++;
         mButtonDisplay = (Button) getActivity().findViewById(R.id.button_create_date);
-        date = day + "/" + month + "/" + year;
+        if (day < 10){
+            date = "0" + day;
+        }else{
+            date = "" + day;
+        }
+        if (month < 10) {
+            date = date + "/0" + month;
+        }else {
+            date = date + "/" + month;
+        }
+        date = date + "/" + year;
         mButtonDisplay.setText(date);
 
     }
