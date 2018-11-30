@@ -9,7 +9,6 @@
     android:baselineAligned="false"
     tools:context=".HomeActivity">
 
-    <!-- Colocar o RecyclerView num fragmento-->
     <android.support.v7.widget.RecyclerView
         android:id="@+id/list_view"
         android:layout_width="match_parent"
