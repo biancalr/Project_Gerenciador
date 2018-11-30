@@ -4,9 +4,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Parcelable;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -35,7 +39,13 @@ class AtividadeListAdapter extends RecyclerView.Adapter<AtividadeListAdapter.Ati
     Context context;
     RequestQueue queue;
 
-    public AtividadeListAdapter(List<Atividade> tasks, RequestQueue queue, Context context) {
+    public AtividadeListAdapter(List<Atividade> tasks, @Nullable RequestQueue queue, Context context) {
+        this.tasks = tasks;
+        this.context = context;
+        this.queue = queue;
+    }
+
+    public AtividadeListAdapter(List<Atividade> tasks, Context context) {
         this.tasks = tasks;
         this.context = context;
         this.queue = queue;
@@ -63,7 +73,7 @@ class AtividadeListAdapter extends RecyclerView.Adapter<AtividadeListAdapter.Ati
     }
 
 
-    public class AtividadeHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class AtividadeHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnCreateContextMenuListener{
 
         private final TextView taskName;
         private final TextView taskDate;
@@ -80,6 +90,7 @@ class AtividadeListAdapter extends RecyclerView.Adapter<AtividadeListAdapter.Ati
             this.taskWeather = (TextView) itemView.findViewById(R.id.task_weather);
             itemView.setOnClickListener(this);
             context = itemView.getContext();
+            itemView.setOnCreateContextMenuListener(this);
         }
 
         @Override
@@ -92,6 +103,30 @@ class AtividadeListAdapter extends RecyclerView.Adapter<AtividadeListAdapter.Ati
             intent.putExtra("localization", this.task.getLocalization().getName());
             context.startActivity(intent);
         }
+
+        @Override
+        public void onCreateContextMenu(ContextMenu contextMenu, View view, ContextMenu.ContextMenuInfo contextMenuInfo) {
+            MenuItem update = contextMenu.add(Menu.NONE,1,1,"Update");
+            MenuItem delete = contextMenu.add(Menu.NONE,2,2,"Delete");
+            delete.setOnMenuItemClickListener(onChange);
+            update.setOnMenuItemClickListener(onChange);
+        }
+
+        private MenuItem.OnMenuItemClickListener onChange = new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()){
+                    case 1:
+                        Toast.makeText(context, "Não implementada.", Toast.LENGTH_SHORT).show();
+                        return true;
+                    case 2:
+                        Toast.makeText(context, "Não implementada.", Toast.LENGTH_SHORT).show();
+                        return true;
+                    default:
+                        return false;
+                }
+            }
+        };
 
         public void bindTask(Atividade task) {
             Log.d(TAG, "bindTask: called");

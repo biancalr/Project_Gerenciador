@@ -134,34 +134,4 @@ public class HomeActivity extends AppCompatActivity{
         mAuth.removeAuthStateListener(authListener);
     }
 
-        /*@Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-        super.onCreateContextMenu(menu, v, menuInfo);
-        MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.context_menu, menu);
-    }
-
-    @Override
-    public boolean onContextItemSelected(MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.action_delete:
-                deleteItem("");
-                return true;
-            case R.id.action_update:
-                updateItem("");
-                return true;
-            default:
-                return super.onContextItemSelected(item);
-        }
-    }
-
-    private void updateItem(String taskId) {
-        Toast.makeText(this, "Não implementada.", Toast.LENGTH_SHORT).show();
-    }
-
-    private void deleteItem(String taskId) {
-        Toast.makeText(this, "Não implementada.", Toast.LENGTH_SHORT).show();
-    }
-*/
-
 }

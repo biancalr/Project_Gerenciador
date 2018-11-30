@@ -12,14 +12,16 @@
         android:layout_height="wrap_content"
         android:inputType="text"
         android:hint="Login"
-        android:layout_marginVertical="2pt"/>
+        android:layout_marginVertical="2pt"
+        android:text="bianca@leopoldo.com"/>
 
     <EditText android:id="@+id/edit_passwd"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="textPassword"
         android:hint="Senha"
-        android:layout_marginVertical="2pt"/>
+        android:layout_marginVertical="2pt"
+        android:text="123456"/>
 
     <Button android:id="@+id/button_sign_in"
         android:layout_width="match_parent"
