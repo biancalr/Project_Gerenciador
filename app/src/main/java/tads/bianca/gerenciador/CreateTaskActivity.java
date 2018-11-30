@@ -99,9 +99,9 @@ public class CreateTaskActivity extends AppCompatActivity {
             initializeComponents();
             fillComponents();
             //Creating an id
-            String id = drAtividade.push().getKey();
+            atividade.setId(drAtividade.push().getKey());
             //Set the atividade as a child
-            drAtividade.child("atividades").child(id).setValue(atividade);
+            drAtividade.child("atividades").child(atividade.getId()).setValue(atividade);
             Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
             startActivity(intent);
         }catch (Exception e) {
