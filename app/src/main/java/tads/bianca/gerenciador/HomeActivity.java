@@ -35,8 +35,8 @@ public class HomeActivity extends AppCompatActivity{
     private FirebaseAuthListener authListener;
     private List<Atividade> tasks;
     private RecyclerView recyclerView;
-    private RequestQueue queue;
     private DatabaseReference drAtividade;
+    private RequestQueue queue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,7 +118,6 @@ public class HomeActivity extends AppCompatActivity{
                 recyclerView = (RecyclerView)findViewById(R.id.list_view);
                 recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
                 recyclerView.setAdapter(new AtividadeListAdapter(tasks, queue, getApplicationContext()));
-
             }
 
             @Override
@@ -134,5 +133,35 @@ public class HomeActivity extends AppCompatActivity{
         queue.cancelAll(this);
         mAuth.removeAuthStateListener(authListener);
     }
+
+        /*@Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.context_menu, menu);
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.action_delete:
+                deleteItem("");
+                return true;
+            case R.id.action_update:
+                updateItem("");
+                return true;
+            default:
+                return super.onContextItemSelected(item);
+        }
+    }
+
+    private void updateItem(String taskId) {
+        Toast.makeText(this, "Não implementada.", Toast.LENGTH_SHORT).show();
+    }
+
+    private void deleteItem(String taskId) {
+        Toast.makeText(this, "Não implementada.", Toast.LENGTH_SHORT).show();
+    }
+*/
 
 }
