@@ -50,6 +50,7 @@ class AtividadeListAdapter extends RecyclerView.Adapter<AtividadeListAdapter.Ati
 
     @Override
     public void onBindViewHolder(AtividadeHolder holder, final int position) {
+        holder.itemView.setLongClickable(true);
         holder.bindTask(tasks.get(position));
     }
 
