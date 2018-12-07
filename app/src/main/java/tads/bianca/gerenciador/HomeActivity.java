@@ -134,4 +134,6 @@ public class HomeActivity extends AppCompatActivity{
         mAuth.removeAuthStateListener(authListener);
     }
 
+
+
 }
