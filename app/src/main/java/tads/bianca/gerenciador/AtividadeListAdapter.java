@@ -21,6 +21,12 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -39,7 +45,7 @@ class AtividadeListAdapter extends RecyclerView.Adapter<AtividadeListAdapter.Ati
     Context context;
     RequestQueue queue;
 
-    public AtividadeListAdapter(List<Atividade> tasks, @Nullable RequestQueue queue, Context context) {
+    public AtividadeListAdapter(List<Atividade> tasks, RequestQueue queue, Context context) {
         this.tasks = tasks;
         this.context = context;
         this.queue = queue;
@@ -48,7 +54,7 @@ class AtividadeListAdapter extends RecyclerView.Adapter<AtividadeListAdapter.Ati
     public AtividadeListAdapter(List<Atividade> tasks, Context context) {
         this.tasks = tasks;
         this.context = context;
-        this.queue = queue;
+        this.queue = null;
     }
 
     @Override
@@ -117,16 +123,24 @@ class AtividadeListAdapter extends RecyclerView.Adapter<AtividadeListAdapter.Ati
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()){
                     case 1:
-                        Toast.makeText(context, "Não implementada.", Toast.LENGTH_SHORT).show();
+                        update();
                         return true;
                     case 2:
-                        Toast.makeText(context, "Não implementada.", Toast.LENGTH_SHORT).show();
+                        delete();
                         return true;
                     default:
                         return false;
                 }
             }
         };
+
+        private void update(){
+            Toast.makeText(context, "Não implementada.", Toast.LENGTH_SHORT).show();
+        }
+
+        private void delete(){
+            Toast.makeText(context, "Não implementada.", Toast.LENGTH_SHORT).show();
+        }
 
         public void bindTask(Atividade task) {
             Log.d(TAG, "bindTask: called");
