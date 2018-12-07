@@ -40,7 +40,7 @@ public class AtividadeDescriptionActivity extends AppCompatActivity {
         buttonOpenRoute.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), RouteActivity.class);
+                Intent intent = new Intent(getApplicationContext(), LocationActivity.class);
                 startActivity(intent);
             }
         });
