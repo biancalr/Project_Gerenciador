@@ -10,17 +10,23 @@ public class Localization implements Serializable{
     private String name;
     private transient String weather;
     private transient String temp;
+    private transient String latitude;
+    private transient String longitude;
 
     public Localization(String nome){
         this.name = nome;
         this.weather = null;
         this.temp = null;
+        this.latitude = null;
+        this.longitude = null;
     }
 
     public Localization(){
         this.name = null;
         this.weather = null;
         this.temp = null;
+        this.latitude = null;
+        this.longitude = null;
     }
 
     public String getName() {
@@ -47,11 +53,25 @@ public class Localization implements Serializable{
         this.temp = temp;
     }
 
+    public String getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
+    }
+
+    public String getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
+    }
+
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder("Name: " + this.name);
-        sb.append("Weather: " + this.weather);
-        sb.append("Temperature: " + this.temp);
-        return sb.toString();
+        return new StringBuilder("Name: " + this.name).toString().trim();
     }
+
 }
