@@ -3,8 +3,6 @@ package tads.bianca.gerenciador;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Parcelable;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -21,23 +19,16 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.google.firebase.FirebaseApp;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.Serializable;
 import java.util.List;
 
 import tads.bianca.gerenciador.Model.Atividade;
 import tads.bianca.gerenciador.Model.Localization;
 
-class AtividadeListAdapter extends RecyclerView.Adapter<AtividadeListAdapter.AtividadeHolder> {
+public class AtividadeListAdapter extends RecyclerView.Adapter<AtividadeListAdapter.AtividadeHolder> {
 
     private static final String TAG = "AtividadeListAdapter";
 

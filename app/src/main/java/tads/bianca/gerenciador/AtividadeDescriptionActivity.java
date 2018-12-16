@@ -31,7 +31,7 @@ public class AtividadeDescriptionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_atividade_description);
         ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
-        atividade = (Atividade) getIntent().getSerializableExtra("task");
+        atividade = (Atividade) getIntent().getParcelableExtra("task");
         atividade.setLocalization(new Localization((String) getIntent().getSerializableExtra("localization")));
         Log.e(TAG, "task: " + atividade.getName());
         initializeComponents();
