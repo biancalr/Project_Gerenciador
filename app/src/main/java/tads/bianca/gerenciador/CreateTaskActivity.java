@@ -11,7 +11,12 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
+import com.google.android.gms.location.places.GeoDataClient;
+import com.google.android.gms.location.places.PlaceDetectionClient;
+import com.google.android.gms.location.places.Places;
+import com.google.android.gms.maps.GoogleMap;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -23,33 +28,38 @@ import tads.bianca.gerenciador.Model.Localization;
 
 public class CreateTaskActivity extends AppCompatActivity {
 
-    private FirebaseAuth mAuth;
     private static final String TAG = "CreateTaskActivity";
-    private DatabaseReference drAtividade;
+
     private Atividade atividade;
-    DateFragment fragmentDate;
-    TimeFragment fragmentTime;
+
+    private DateFragment fragmentDate;
+    private TimeFragment fragmentTime;
 
     private EditText name;
     private EditText description;
-    private EditText localization;
-    private Localization loc;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_creat_task);
         ActionBar ab = getSupportActionBar();
+        Log.d(TAG, " " + ab.toString());
         ab.setDisplayHomeAsUpEnabled(true);
-        this.mAuth = FirebaseAuth.getInstance();
         fillFragments();
-        FirebaseDatabase fbDB = FirebaseDatabase.getInstance();
-        drAtividade = fbDB.getReference("users").child(mAuth.getCurrentUser().getUid());
-        Button buttonCreateTaskClick = (Button) findViewById(R.id.button_create_task);
-        buttonCreateTaskClick.setOnClickListener(new View.OnClickListener() {
+        initializeComponents();
+        fillComponents();
+        Button buttonSetLocation = (Button) findViewById(R.id.button_set_location);
+        buttonSetLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                createAtividade();
+                Intent intent = new Intent(getApplicationContext(), CreateLocalizationActivity.class);
+                if (atividade != null){
+                    intent.putExtra("atividade", atividade);
+                    Log.d(TAG, "atividade: " + atividade.getName() + " sent");
+                    startActivity(intent);
+                }else {
+                    Toast.makeText(CreateTaskActivity.this, "Blank spaces not allowed", Toast.LENGTH_SHORT).show();
+                }
             }
         });
         Spinner spinner = (Spinner) findViewById(R.id.spinner);
@@ -74,10 +84,9 @@ public class CreateTaskActivity extends AppCompatActivity {
 
     private void initializeComponents() {
         //Catch the data from the layout
+        atividade = new Atividade();
         this.name = (EditText) findViewById(R.id.create_name);
         this.description = (EditText) findViewById(R.id.create_description);
-        this.localization = (EditText) findViewById(R.id.create_location);
-        this.loc = new Localization(this.localization.getText().toString());
     }
 
     private void fillComponents() {
@@ -86,27 +95,26 @@ public class CreateTaskActivity extends AppCompatActivity {
         atividade.setDescription(description.getText().toString().trim());
         atividade.setDate(fragmentDate.getDate().trim());
         atividade.setHour(fragmentTime.getTime().trim());
-        atividade.setLocalization(this.loc);
     }
 
-    private void createAtividade() {
-        try {
-            Log.d(TAG, "addTask: called");
-            atividade = new Atividade();
-            initializeComponents();
-            fillComponents();
-            //Creating an id
-            atividade.setId(drAtividade.push().getKey());
-            //Set the atividade as a child
-            drAtividade.child("atividades").child(atividade.getId()).setValue(atividade);
-            Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
-            startActivity(intent);
-        }catch (Exception e) {
-            Log.d(TAG, "Erro: \n" + e.getMessage());
-            System.out.println("Erro: \n" + e.getMessage());
-        }
-
-    }
+//    private void createAtividade() {
+//        try {
+//            Log.d(TAG, "addTask: called");
+//            atividade = new Atividade();
+//            initializeComponents();
+//            fillComponents();
+//            //Creating an id
+//            atividade.setId(drAtividade.push().getKey());
+//            //Set the atividade as a child
+//            drAtividade.child("atividades").child(atividade.getId()).setValue(atividade);
+//            Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+//            startActivity(intent);
+//        }catch (Exception e) {
+//            Log.d(TAG, "Erro: \n" + e.getMessage());
+//            System.out.println("Erro: \n" + e.getMessage());
+//        }
+//
+//    }
 
 
 }

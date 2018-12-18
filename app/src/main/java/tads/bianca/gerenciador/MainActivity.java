@@ -19,8 +19,6 @@ import tads.bianca.gerenciador.Model.User;
 
 public class MainActivity extends AppCompatActivity {
 
-    private User user;
-
     private EditText edEmail;
     private EditText edPassword;
 

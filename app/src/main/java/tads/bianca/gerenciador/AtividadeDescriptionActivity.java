@@ -32,7 +32,7 @@ public class AtividadeDescriptionActivity extends AppCompatActivity {
         ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
         atividade = (Atividade) getIntent().getParcelableExtra("task");
-        atividade.setLocalization(new Localization((String) getIntent().getSerializableExtra("localization")));
+        atividade.setLocalization((Localization) getIntent().getParcelableExtra("localization"));
         Log.e(TAG, "task: " + atividade.getName());
         initializeComponents();
         fillComponents(atividade);
@@ -41,6 +41,8 @@ public class AtividadeDescriptionActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), LocationActivity.class);
+                intent.putExtra("task", atividade);
+                intent.putExtra("localization", atividade.getLocalization());
                 startActivity(intent);
             }
         });
@@ -51,7 +53,7 @@ public class AtividadeDescriptionActivity extends AppCompatActivity {
         this.nome.setText("Name: " + atividade.getName());
         this.data.setText("Date: " + atividade.getDate());
         this.hora.setText("Hour: " + atividade.getHour());
-        this.localizacao.setText("Localization: " + atividade.getLocalization().getName());
+        this.localizacao.setText("Localization: " + atividade.getLocalization().toString());
         this.descricao.setText("Description: " + atividade.getDescription());
     }
 

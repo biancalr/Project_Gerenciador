@@ -1,13 +1,14 @@
 package tads.bianca.gerenciador.Model;
 
+import android.app.Application;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 
 import com.google.firebase.database.IgnoreExtraProperties;
 
-import java.io.Serializable;
-
 @IgnoreExtraProperties
-public class Atividade implements Serializable{
+public class Atividade implements Parcelable{
     private String id;
     private String name;
     private transient Localization localization;
@@ -32,6 +33,26 @@ public class Atividade implements Serializable{
         this.date = date;
         this.hour = hora;
     }
+
+    protected Atividade(Parcel in) {
+        id = in.readString();
+        name = in.readString();
+        description = in.readString();
+        date = in.readString();
+        hour = in.readString();
+    }
+
+    public static final Creator<Atividade> CREATOR = new Creator<Atividade>() {
+        @Override
+        public Atividade createFromParcel(Parcel in) {
+            return new Atividade(in);
+        }
+
+        @Override
+        public Atividade[] newArray(int size) {
+            return new Atividade[size];
+        }
+    };
 
     public String getId() {
         return id;
@@ -81,4 +102,17 @@ public class Atividade implements Serializable{
         this.hour = hour;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeString(name);
+        dest.writeString(description);
+        dest.writeString(date);
+        dest.writeString(hour);
+    }
 }

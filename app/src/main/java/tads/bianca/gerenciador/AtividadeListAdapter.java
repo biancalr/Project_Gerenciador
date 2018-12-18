@@ -97,7 +97,7 @@ public class AtividadeListAdapter extends RecyclerView.Adapter<AtividadeListAdap
                     task.getName(), Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(context, AtividadeDescriptionActivity.class);
             intent.putExtra("task", this.task);
-            intent.putExtra("localization", this.task.getLocalization().getName());
+            intent.putExtra("localization", this.task.getLocalization());
             context.startActivity(intent);
         }
 
