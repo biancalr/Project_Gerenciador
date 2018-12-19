@@ -74,7 +74,7 @@ public class CreateLocalizationActivity extends AppCompatActivity implements Goo
     private static final String TAG = "CreateLocalizationActiv";
     private GoogleMap mMap;
     private GoogleApiClient mGoogleApiClient;
-    private ImageView mPlacePicker, mInfo;
+    private ImageView mPlacePicker;
     private Marker mMarker;
     private Localization localization;
     private AutoCompleteTextView mSearchText;
@@ -97,7 +97,6 @@ public class CreateLocalizationActivity extends AppCompatActivity implements Goo
         localization = new Localization();
         mPlacePicker = (ImageView) findViewById(R.id.place_picker);
         mSearchText = (AutoCompleteTextView) findViewById(R.id.input_search);
-        mInfo = (ImageView) findViewById(R.id.place_info);
         atividade = (Atividade) getIntent().getParcelableExtra("atividade");
         getLocationPermission();
     }
@@ -169,23 +168,6 @@ public class CreateLocalizationActivity extends AppCompatActivity implements Goo
                 }
 
                 return false;
-            }
-        });
-
-        mInfo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.d(TAG, "onClick: clicked place info");
-                try{
-                    if(mMarker.isInfoWindowShown()){
-                        mMarker.hideInfoWindow();
-                    }else{
-                        Log.d(TAG, "onClick: place info: " + localization.toString());
-                        mMarker.showInfoWindow();
-                    }
-                }catch (NullPointerException e){
-                    Log.e(TAG, "onClick: NullPointerException: " + e.getMessage() );
-                }
             }
         });
 
