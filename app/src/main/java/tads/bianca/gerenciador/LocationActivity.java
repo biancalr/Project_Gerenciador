@@ -125,6 +125,9 @@ public class LocationActivity extends AppCompatActivity implements GoogleMap.OnM
                         Log.d(TAG, "onDataChange: called: ativdade total size of " + atividades.size() + " atividades");
                     }
                 }
+                if (mMap != null){
+                    setUpCluster();
+                }
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
@@ -148,7 +151,7 @@ public class LocationActivity extends AppCompatActivity implements GoogleMap.OnM
                 return;
             }
         }
-        setUpCluster();
+//        setUpCluster();
         init();
     }
 
@@ -425,10 +428,10 @@ public class LocationActivity extends AppCompatActivity implements GoogleMap.OnM
                 localization.setLat(place.getLatLng().latitude);
                 localization.setLon(place.getLatLng().longitude);
                 Log.d(TAG, "onResult: latlng: " + place.getLatLng());
-                moveCamera(new LatLng(place.getViewport().getCenter().latitude,
-                        place.getViewport().getCenter().longitude), DEFAULT_ZOOM, localization);
+                moveCamera(new LatLng(localization.getLat(),
+                        localization.getLon()), DEFAULT_ZOOM, localization);
+//                setUpCluster();
                 places.release();
-
                 Log.d(TAG, "onResult: place: " + localization.toString());
             }catch (NullPointerException e){
                 Log.e(TAG, "onResult: NullPointerException: " + e.getMessage() );
