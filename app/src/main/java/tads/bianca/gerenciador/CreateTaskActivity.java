@@ -42,17 +42,16 @@ public class CreateTaskActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_creat_task);
-        ActionBar ab = getSupportActionBar();
-        Log.d(TAG, " " + ab.toString());
-        ab.setDisplayHomeAsUpEnabled(true);
+//        ActionBar ab = getSupportActionBar();
+//        ab.setDisplayHomeAsUpEnabled(true);
         fillFragments();
-        initializeComponents();
-        fillComponents();
         Button buttonSetLocation = (Button) findViewById(R.id.button_set_location);
         buttonSetLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), CreateLocalizationActivity.class);
+                initializeComponents();
+                fillComponents();
                 if (atividade != null){
                     intent.putExtra("atividade", atividade);
                     Log.d(TAG, "atividade: " + atividade.getName() + " sent");

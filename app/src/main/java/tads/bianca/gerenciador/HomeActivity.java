@@ -9,6 +9,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
@@ -48,6 +50,13 @@ public class HomeActivity extends AppCompatActivity{
         this.authListener = new FirebaseAuthListener(this);
         FirebaseDatabase fbDB = FirebaseDatabase.getInstance();
         drAtividade = fbDB.getReference("users").child(mAuth.getCurrentUser().getUid()).child("atividades");
+        Button button = (Button) findViewById(R.id.btn_create_atividade);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openAdd();
+            }
+        });
 
     }
 
@@ -97,7 +106,7 @@ public class HomeActivity extends AppCompatActivity{
     }
 
     private void openAdd() {
-        Intent intent = new Intent(getApplicationContext(), CreateTaskActivity.class);
+        Intent intent = new Intent(HomeActivity.this, CreateTaskActivity.class);
         startActivity(intent);
     }
 

@@ -32,6 +32,8 @@ import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
 import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.places.AutocompletePrediction;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.PlaceBuffer;
@@ -45,6 +47,8 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -56,7 +60,9 @@ import java.util.List;
 import tads.bianca.gerenciador.Model.Atividade;
 import tads.bianca.gerenciador.Model.Localization;
 
+import static tads.bianca.gerenciador.Constants.COURSE_LOCATION;
 import static tads.bianca.gerenciador.Constants.DEFAULT_ZOOM;
+import static tads.bianca.gerenciador.Constants.FINE_LOCATION;
 import static tads.bianca.gerenciador.Constants.LAT_LNG_BOUNDS;
 import static tads.bianca.gerenciador.Constants.LOCATION_PERMISSION_REQUEST_CODE;
 import static tads.bianca.gerenciador.Constants.PLACE_PICKER_REQUEST;
@@ -76,13 +82,15 @@ public class CreateLocalizationActivity extends AppCompatActivity implements Goo
     private Atividade atividade;
     private FirebaseAuth mAuth;
     private DatabaseReference drAtividade;
+    private FusedLocationProviderClient mFusedLocationProviderClient;
+    private boolean mLocationPermissionsGranted = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_localization);
-        ActionBar ab = getSupportActionBar();
-        ab.setDisplayHomeAsUpEnabled(true);
+//        ActionBar ab = getSupportActionBar();
+//        ab.setDisplayHomeAsUpEnabled(true);
         this.mAuth = FirebaseAuth.getInstance();
         FirebaseDatabase fbDB = FirebaseDatabase.getInstance();
         drAtividade = fbDB.getReference("users").child(mAuth.getCurrentUser().getUid());
@@ -91,6 +99,10 @@ public class CreateLocalizationActivity extends AppCompatActivity implements Goo
         mSearchText = (AutoCompleteTextView) findViewById(R.id.input_search);
         mInfo = (ImageView) findViewById(R.id.place_info);
         atividade = (Atividade) getIntent().getParcelableExtra("atividade");
+        getLocationPermission();
+    }
+
+    public void initMap(){
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map_2);
         mapFragment.getMapAsync(this);
@@ -118,7 +130,14 @@ public class CreateLocalizationActivity extends AppCompatActivity implements Goo
         mMap.setOnMyLocationButtonClickListener(this);
         mMap.setOnMyLocationClickListener(this);
         enableMyLocation();
-        mMap.moveCamera(CameraUpdateFactory.zoomTo(20.0f));
+        if (mLocationPermissionsGranted) {
+            getDeviceLocation();
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                    != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this,
+                    Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                return;
+            }
+        }
         init();
     }
 
@@ -195,11 +214,44 @@ public class CreateLocalizationActivity extends AppCompatActivity implements Goo
             // Permission to access the location is missing.
             PermissionUtils.requestPermission(this, LOCATION_PERMISSION_REQUEST_CODE,
                     Manifest.permission.ACCESS_FINE_LOCATION, true);
+            initMap();
         } else if (mMap != null) {
             // Access to the location has been granted to the app.
             mMap.setMyLocationEnabled(true);
         }
 
+    }
+
+    private void getDeviceLocation(){
+        Log.d(TAG, "getDeviceLocation: getting the devices current location");
+
+        mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+
+        try{
+            if(mLocationPermissionsGranted){
+
+                final Task location = mFusedLocationProviderClient.getLastLocation();
+                location.addOnCompleteListener(new OnCompleteListener() {
+                    @Override
+                    public void onComplete(@NonNull Task task) {
+                        if(task.isSuccessful()){
+                            Log.d(TAG, "onComplete: found location!");
+                            Location currentLocation = (Location) task.getResult();
+
+                            moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()),
+                                    DEFAULT_ZOOM,
+                                    "My Location");
+
+                        }else{
+                            Log.d(TAG, "onComplete: current location is null");
+                            Toast.makeText(CreateLocalizationActivity.this, "unable to get current location", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+            }
+        }catch (SecurityException e){
+            Log.e(TAG, "getDeviceLocation: SecurityException: " + e.getMessage() );
+        }
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -263,8 +315,7 @@ public class CreateLocalizationActivity extends AppCompatActivity implements Goo
 
         if(placeInfo != null){
             try{
-                String snippet = "Address: " + placeInfo.getAddress() + "\n" +
-                        "Locale: " + placeInfo.getLocale() + "\n";
+                String snippet = "Address: " + placeInfo.getAddress() + "\n";
                 MarkerOptions options = new MarkerOptions()
                         .position(latLng)
                         .title(placeInfo.getName())
@@ -292,6 +343,53 @@ public class CreateLocalizationActivity extends AppCompatActivity implements Goo
             mMap.addMarker(options);
         }
         hideSoftKeyboard();
+    }
+
+    private void getLocationPermission(){
+        Log.d(TAG, "getLocationPermission: getting location permissions");
+        String[] permissions = {Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION};
+
+        if(ContextCompat.checkSelfPermission(this.getApplicationContext(),
+                FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
+            if(ContextCompat.checkSelfPermission(this.getApplicationContext(),
+                    COURSE_LOCATION) == PackageManager.PERMISSION_GRANTED){
+                mLocationPermissionsGranted = true;
+                initMap();
+            }else{
+                ActivityCompat.requestPermissions(this,
+                        permissions,
+                        LOCATION_PERMISSION_REQUEST_CODE);
+            }
+        }else{
+            ActivityCompat.requestPermissions(this,
+                    permissions,
+                    LOCATION_PERMISSION_REQUEST_CODE);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        Log.d(TAG, "onRequestPermissionsResult: called.");
+        mLocationPermissionsGranted = false;
+
+        switch(requestCode){
+            case LOCATION_PERMISSION_REQUEST_CODE:{
+                if(grantResults.length > 0){
+                    for(int i = 0; i < grantResults.length; i++){
+                        if(grantResults[i] != PackageManager.PERMISSION_GRANTED){
+                            mLocationPermissionsGranted = false;
+                            Log.d(TAG, "onRequestPermissionsResult: permission failed");
+                            return;
+                        }
+                    }
+                    Log.d(TAG, "onRequestPermissionsResult: permission granted");
+                    mLocationPermissionsGranted = true;
+                    //initialize our map
+                    initMap();
+                }
+            }
+        }
     }
 
     private void hideSoftKeyboard(){
@@ -330,7 +428,8 @@ public class CreateLocalizationActivity extends AppCompatActivity implements Goo
                 Log.d(TAG, "onResult: address: " + place.getAddress());
                 localization.setId(place.getId());
                 Log.d(TAG, "onResult: id:" + place.getId());
-                localization.setLatLng(place.getLatLng());
+                localization.setLat(place.getLatLng().latitude);
+                localization.setLon(place.getLatLng().longitude);
                 Log.d(TAG, "onResult: latlng: " + place.getLatLng());
                 moveCamera(new LatLng(place.getViewport().getCenter().latitude,
                         place.getViewport().getCenter().longitude), DEFAULT_ZOOM, localization);

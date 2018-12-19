@@ -3,10 +3,7 @@ package tads.bianca.gerenciador.Model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.database.IgnoreExtraProperties;
-
-import java.io.Serializable;
 
 @IgnoreExtraProperties
 public class Localization implements Parcelable{
@@ -14,37 +11,37 @@ public class Localization implements Parcelable{
     private String name;
     private transient String weather;
     private transient String temp;
-    private LatLng latLng;
+    private double lat;
+    private double lon;
     private String id;
     private String address;
-    private String locale;
 
     public Localization(String nome){
         this.name = nome;
         this.weather = null;
         this.temp = null;
-        this.latLng = null;
+        this.lat = 0;
+        this.lon = 0;
         this.id = null;
         this.address = null;
-        this.locale = null;
     }
 
     public Localization(){
         this.name = null;
         this.weather = null;
         this.temp = null;
-        this.latLng = null;
+        this.lat = 0;
+        this.lon = 0;
         this.id = null;
         this.address = null;
-        this.locale = null;
     }
 
     protected Localization(Parcel in) {
         name = in.readString();
-        latLng = in.readParcelable(LatLng.class.getClassLoader());
+        lat = in.readDouble();
+        lon = in.readDouble();
         id = in.readString();
         address = in.readString();
-        locale = in.readString();
     }
 
     public static final Creator<Localization> CREATOR = new Creator<Localization>() {
@@ -71,12 +68,19 @@ public class Localization implements Parcelable{
         return temp;
     }
 
-    public LatLng getLatLng() {
-        return latLng;
+    public Double getLat() {
+        return lat;
+    }
+    public Double getLon() {
+        return lon;
     }
 
-    public void setLatLng(LatLng latLng) {
-        this.latLng = latLng;
+    public void setLat(Double lat) {
+        this.lat = lat;
+    }
+
+    public void setLon(Double lon) {
+        this.lon = lon;
     }
 
     public String getId() {
@@ -85,14 +89,6 @@ public class Localization implements Parcelable{
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public String getLocale() {
-        return locale;
-    }
-
-    public void setLocale(String locale) {
-        this.locale = locale;
     }
 
     public String getAddress() {
@@ -117,7 +113,9 @@ public class Localization implements Parcelable{
 
     @Override
     public String toString() {
-        return new StringBuilder("Name: " + this.name).toString().trim();
+        StringBuffer sb = new StringBuffer("\n\n\tName: " + this.name);
+        sb.append("\n\n\tAddress: " + this.address);
+        return sb.toString();
     }
 
     @Override
@@ -128,9 +126,9 @@ public class Localization implements Parcelable{
     @Override
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeString(name);
-        parcel.writeParcelable(latLng, i);
+        parcel.writeDouble(lat);
+        parcel.writeDouble(lon);
         parcel.writeString(id);
         parcel.writeString(address);
-        parcel.writeString(locale);
     }
 }
