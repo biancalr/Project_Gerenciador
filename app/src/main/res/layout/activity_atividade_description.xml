@@ -33,11 +33,21 @@
         android:layout_marginVertical="2pt"
         android:textSize="10pt"/>
 
-    <TextView android:id="@+id/descrip_location"
+    <TextView
+        android:id="@+id/descrip_address"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="text"
-        android:text="Location: Place"
+        android:text="Address: localization"
+        android:layout_marginVertical="2pt"
+        android:textSize="10pt"/>
+
+    <TextView
+        android:id="@+id/descrip_location_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:text="Name: local"
         android:layout_marginVertical="2pt"
         android:textSize="10pt"/>
 

@@ -20,7 +20,8 @@ public class AtividadeDescriptionActivity extends AppCompatActivity {
     private Atividade atividade;
 
     private TextView nome;
-    private TextView localizacao;
+    private TextView address;
+    private TextView localName;
     private TextView data;
     private TextView hora;
     private TextView descricao;
@@ -53,10 +54,11 @@ public class AtividadeDescriptionActivity extends AppCompatActivity {
     }
 
     private void fillComponents(Atividade atividade) {
-        this.nome.setText("Name: " + atividade.getName());
+        this.nome.setText(atividade.getName());
         this.data.setText("Date: " + atividade.getDate());
         this.hora.setText("Hour: " + atividade.getHour());
-        this.localizacao.setText("Localization: " + atividade.getLocalization().toString());
+        this.localName.setText("Name: " + atividade.getLocalization().getName());
+        this.address.setText("Adress: " + atividade.getLocalization().getAddress());
         this.descricao.setText("Description: " + atividade.getDescription());
     }
 
@@ -64,7 +66,8 @@ public class AtividadeDescriptionActivity extends AppCompatActivity {
         this.nome = (TextView) findViewById(R.id.descrip_name);
         this.data = (TextView) findViewById(R.id.descrip_date);
         this.hora = (TextView) findViewById(R.id.descrip_hour);
-        this.localizacao = (TextView) findViewById(R.id.descrip_location);
+        this.localName = (TextView) findViewById(R.id.descrip_location_name);
+        this.address = (TextView) findViewById(R.id.descrip_address);
         this.descricao = (TextView) findViewById(R.id.descrip_description);
     }
 
