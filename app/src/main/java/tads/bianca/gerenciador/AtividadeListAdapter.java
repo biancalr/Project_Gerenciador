@@ -152,10 +152,11 @@ public class AtividadeListAdapter extends RecyclerView.Adapter<AtividadeListAdap
 
         private void loadInBackground(final TextView weatherView, final Localization localization) {
             Uri.Builder builder = new Uri.Builder();
+            String[] city = localization.getAddress().split(",");
             builder.scheme("http");
             builder.authority("api.openweathermap.org");
             builder.appendPath("data/2.5/weather");
-            builder.appendQueryParameter("q", localization.getName());
+            builder.appendQueryParameter("q", city[2]);
             builder.appendQueryParameter("mode", "json");
             builder.appendQueryParameter("units", "metric");
             builder.appendQueryParameter("cnt", "" + 1);
