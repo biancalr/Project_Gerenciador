@@ -8,7 +8,7 @@ import android.widget.TextView;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.Marker;
 
-class CustomInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
+public class CustomInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
     private final View mWindow;
     private Context mContext;
 

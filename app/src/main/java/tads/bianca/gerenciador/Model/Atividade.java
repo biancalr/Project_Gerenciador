@@ -1,11 +1,12 @@
 package tads.bianca.gerenciador.Model;
 
-import android.app.Application;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.database.IgnoreExtraProperties;
+import com.google.maps.android.clustering.ClusterItem;
 
 @IgnoreExtraProperties
 public class Atividade implements Parcelable{
